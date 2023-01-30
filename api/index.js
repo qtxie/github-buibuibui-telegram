@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
   const gh_sig = req.headers["x-hub-signature"];
   const gh_sig_256 = req.headers["x-hub-signature-256"];
 
-  if (method === "POST") {
+  if (method === "POST" && verifyWebhook.verifyWebhook(body, gh_sig_256)) {
     event.eventSwitch(gh_event, body).then((Msg) => {
       console.log(Msg);
       sendMsg
