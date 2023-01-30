@@ -1,14 +1,12 @@
-# Github2Telegram Notifier
+# Github buibuibui Telegram
 
 ![](thumbnail.png)
 
-Uses Github Webhook and Vercel's Serverless API to send github event updates to Telegram chat.
-
-## Setup
+使用 Github Webhook + Vercel's Serverless API 向 Telegram 推送仓库消息。
 
 ## Deploy with Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fyesmore%2Fgithook2tg&env=TG_TOKEN,TG_CHAT_ID,GH_HOOK_SECRET,PROD&envDescription=Environment%20variables%20needed%20to%20setup%20notifier&envLink=https%3A%2F%2Fgithub.com%2Fyesmore%2Fgithook2tg%23environment-variables&project-name=gh2tg-notif&repo-name=gh2tg-notif)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fyesmore%2Fgh-buibuibui-tg&env=TG_TOKEN,TG_CHAT_ID,GH_HOOK_SECRET,PROD&envDescription=Environment%20variables%20needed%20to%20setup%20notifier&envLink=https%3A%2F%2Fgithub.com%2Fyesmore%2Fgh-buibuibui-tg%23environment-variables&project-name=gh-buibuibui-tg&repo-name=gh-buibuibui-tg)
 
 ### Environment variables
 
