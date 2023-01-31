@@ -35,17 +35,31 @@
 
 查看我的部署效果：[https://t.me/yesmore_cc](https://t.me/yesmore_cc)
 
-### Handlers
+### 支持的 Handlers & TODOs
 
-目前支持以下 event：
+> 仅支持个人仓库，暂不支持组织仓库，欢迎pr
+
+- [x] ping
+- [x] star
+- [x] push
+- [x] fork
+- [x] repository
+- [ ] issues
+- [ ] issue_comment
+- [ ] pull_request
+- [ ] member
+- [ ] watch
+- [ ] ...
 
 
+### 推送原理
 
+git push -> touch Github webhooks then call Vercel's api (http post) -> catch event then handle it -> use Telegram's open api to send event message. 
 
 ## 参考资料
 
-- [关于 Github Webhooks](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/about-webhooks)
-- [仓库事件 Github Webhooks events ](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/webhook-events-and-payloads)
+- [Github Webhooks](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/about-webhooks)
+- [Github Webhooks events ](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/webhook-events-and-payloads)
 
 ## 开源许可
 
