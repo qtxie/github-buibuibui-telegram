@@ -52,8 +52,11 @@ const strategyMap = {
     const zen = cl(body.zen);
     return type_msg + `Zen: ${zen}`;
   },
-  star: ({ body, action, type_msg, sender }) =>
-    handleStar({ body, action, type_msg, sender }),
+  star: ({ body, action, type_msg, sender }) => {
+    const done =
+      action === "created" ? "刚刚点了一个赞 :)" : "悄咪咪取消了点赞 :(";
+    return type_msg + `[${cl(sender.login)}](${sender.html_url}) ${done}`;
+  },
   push: ({ body, action, type_msg, sender, repo_html_url }) => {
     const ref = body.ref.split("/", 3)[2];
     const commits = body.commits;
