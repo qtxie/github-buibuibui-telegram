@@ -1,11 +1,11 @@
 // Webhook events
 // see https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
-const Expecial_Senders = require("./constants");
+const Constants = require("./constants");
 
 function cl(text) {
   if (!text) return "";
-  if (text === Expecial_Senders.Github_Action_Bot.org)
-    return Expecial_Senders.Github_Action_Bot.want;
+  if (text === Constants.Expecial_Senders.Github_Action_Bot.org)
+    return Constants.Expecial_Senders.Github_Action_Bot.want;
   return text
     .replace("_", "\\_")
     .replace("*", "\\*")
@@ -13,7 +13,7 @@ function cl(text) {
     .replace("]", "\\]");
 }
 
-module.exports.eventSwitch = async function (gh_event, body) {
+module.exports.eventHandler = async function (gh_event, body) {
   const action = cl(body.action);
   const repo = body.repository;
   const repo_full_name = cl(repo.full_name);
