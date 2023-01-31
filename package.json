@@ -1,10 +1,10 @@
 {
-  "name": "github2telegram-notifier",
+  "name": "gh-buibuibui-tg",
   "version": "1.0.0",
   "description": "Uses Github Webhook and Vercel's Serverless Api to Send Updates to Telegram chat",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adityatelange/github2telegram-notifier.git"
+    "url": "git+https://github.com/yesmore/gh-buibuibui-tg.git"
   },
   "keywords": [
     "webhook",
@@ -13,14 +13,14 @@
     "telegram"
   ],
   "author": {
-    "name": "Aditya Telange",
-    "url": "https://github.com/adityatelange"
+    "name": "Juice",
+    "url": "https://github.com/yesmore"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/adityatelange/github2telegram-notifier/issues"
+    "url": "https://github.com/yesmore/gh-buibuibui-tg/issues"
   },
-  "homepage": "https://github.com/adityatelange/github2telegram-notifier#readme",
+  "homepage": "https://github.com/yesmore/gh-buibuibui-tg#readme",
   "dependencies": {
     "axios": "^0.21.2",
     "crypto": "^1.0.1"
