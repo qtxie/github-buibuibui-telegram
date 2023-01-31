@@ -3,7 +3,8 @@
 
 function cl(text) {
   if (!text) return "";
-  if (text === "github-actions[bot]") return "github-actions-bot";
+  if (text === Expecial_Senders.Github_Action_Bot.org)
+    return Expecial_Senders.Github_Action_Bot.want;
   return text
     .replace("_", "\\_")
     .replace("*", "\\*")
@@ -36,16 +37,18 @@ module.exports.eventSwitch = async function (gh_event, body) {
   return result;
 };
 
+const handleStar = ({ body, action, type_msg, sender }) => {
+  const done =
+    action === "created" ? "刚刚点了一个赞 :)" : "悄咪咪取消了点赞 :(";
+  return type_msg + `[${cl(sender.login)}](${sender.html_url}) ${done}`;
+};
+
 const strategyMap = {
   ping: ({ body, type_msg, sender }) => {
     const zen = cl(body.zen);
     return type_msg + `Zen: ${zen}`;
   },
-  star: ({ body, action, type_msg, sender }) => {
-    const done =
-      action === "created" ? "刚刚点了一个赞 :)" : "悄咪咪取消了点赞 :(";
-    return type_msg + `[${cl(sender.login)}](${sender.html_url}) ${done}`;
-  },
+  star: handleStar({ body, action, type_msg, sender }),
   push: ({ body, action, type_msg, sender, repo_html_url }) => {
     const ref = body.ref.split("/", 3)[2];
     const commits = body.commits;
