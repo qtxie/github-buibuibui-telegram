@@ -35,6 +35,13 @@
 
 查看我的部署效果：[https://t.me/yesmore_cc](https://t.me/yesmore_cc)
 
+### Handlers
+
+目前支持以下 event：
+
+
+
+
 ## 参考资料
 
 - [关于 Github Webhooks](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/about-webhooks)
