@@ -5,6 +5,8 @@
 基于 Github Webhooks + Vercel's Serverless API + Telegram Bot, 向 Telegram 推送仓库消息。
 
 > 效果：你给仓库 [yesmore/aka.js](https://github.com/yesmore/aka.js) 点了 star，你的 telegram 频道/组将会收到一个包含各种元数据(可选)的点赞信息, 其他 github event 类似。
+>
+> 这是部署在我的 tg 群组([https://t.me/yesmore_cc](https://t.me/yesmore_cc))推送，欢迎加入～
 
 ## 使用 Vercel 部署
 
@@ -31,8 +33,13 @@
 | `GH_HOOK_SECRET` | Github Hook Secret                         | `my github hook seret`                           |
 | `PROD`           | Production deployment or not               | `true`                                           |
 
+查看我的部署效果：[https://t.me/yesmore_cc](https://t.me/yesmore_cc)
 
 ## 参考资料
 
 - [关于 Github Webhooks](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/about-webhooks)
 - [仓库事件 Github Webhooks events ](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/webhook-events-and-payloads)
+
+## 开源许可
+
+gh-buibuibui-tg is open source software licensed as GPL.
