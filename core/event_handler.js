@@ -1,6 +1,6 @@
 // Webhook events
 // see https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
-const Constants = require("./constants");
+const Constants = require("./constants.js");
 
 function cl(text) {
   if (!text) return "";
