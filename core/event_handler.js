@@ -1,9 +1,6 @@
 // Webhook events
 // see https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
-// const Constants = require("./constants.js");
-const Expecial_Senders = {
-  Github_Action_Bot: { org: "github-actions[bot]", want: "github-actions-bot" },
-};
+const { Expecial_Senders } = require("./constants.js");
 
 function cl(text) {
   if (!text) return "";
@@ -41,11 +38,11 @@ module.exports.eventHandler = async function (gh_event, body) {
   return result;
 };
 
-const handleStar = ({ body, action, type_msg, sender }) => {
+function handleStar({ body, action, type_msg, sender }) {
   const done =
     action === "created" ? "刚刚点了一个赞 :)" : "悄咪咪取消了点赞 :(";
   return type_msg + `[${cl(sender.login)}](${sender.html_url}) ${done}`;
-};
+}
 
 const strategyMap = {
   ping: ({ body, type_msg, sender }) => {
