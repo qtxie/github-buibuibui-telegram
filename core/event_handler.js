@@ -1,11 +1,14 @@
 // Webhook events
 // see https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
-const Constants = require("./constants.js");
+// const Constants = require("./constants.js");
+const Expecial_Senders = {
+  Github_Action_Bot: { org: "github-actions[bot]", want: "github-actions-bot" },
+};
 
 function cl(text) {
   if (!text) return "";
-  if (text === Constants.Expecial_Senders.Github_Action_Bot.org)
-    return Constants.Expecial_Senders.Github_Action_Bot.want;
+  if (text === Expecial_Senders.Github_Action_Bot.org)
+    return Expecial_Senders.Github_Action_Bot.want;
   return text
     .replace("_", "\\_")
     .replace("*", "\\*")
