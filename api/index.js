@@ -1,6 +1,6 @@
-const event = require("../lib/eventSwitch.js");
-const sendMsg = require("../lib/sendMsg.js");
-const verifyWebhook = require("../lib/verifyWebhook.js");
+const event = require("../lib/event_handler.js");
+const sendMsg = require("../lib/send_msg.js");
+const verifyWebhook = require("../lib/verify_webhook.js");
 
 // The main, exported, function of the endpoint,
 // dealing with the request and subsequent response
