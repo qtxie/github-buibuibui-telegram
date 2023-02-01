@@ -1,6 +1,19 @@
-# Github buibuibui Telegram
+<div align="center">
+    <h1><code>Github buibuibui Telegram</code></h1> 
+</div>
 
-![](https://i.postimg.cc/3wL5dCw7/about.png)
+<!-- <div align="center">
+    <a href="https://github.com/yesmore/aka.js">
+    	<img src="https://img.shields.io/github/stars/yesmore/gh-buibuibui-tg.svg?logo=github" alt="star"/>
+    </a>
+    <a href="https://github.com/yesmore/aka.js">
+    	<img src="https://img.shields.io/github/license/yesmore/gh-buibuibui-tg" alt="GPL"/>
+    </a>
+</div> -->
+
+<div align="center">
+  <img src="https://i.postimg.cc/3wL5dCw7/about.png">
+</div>
 
 借助 Github 的 Webhooks、Vercel's Serverless API 和 Telegram Bot，连接 Github 和 Telegram，在 Telegram chat 中接收仓库的消息。
 
