@@ -1,6 +1,6 @@
 # Github buibuibui Telegram
 
-![](assets/about.png)
+![](https://i.postimg.cc/3wL5dCw7/about.png)
 
 借助 Github 的 Webhooks、Vercel's Serverless API 和 Telegram Bot，连接 Github 和 Telegram，在 Telegram chat 中接收仓库的消息。
 
@@ -8,10 +8,14 @@
 >
 > 这是部署在我的 tg 群组([https://t.me/yesmore_cc](https://t.me/yesmore_cc))推送，欢迎加入～
 
-![](assets/deploy.png)
+<table style="border:none">
+<tr>
+<td align='center'><img src='https://i.postimg.cc/C1zyDBZ8/deploy1.png'/></td>
+<td align='center'><img src='https://i.postimg.cc/hjwk0Dx5/deploy2.png'/></td>
+</tr>
+</table>
 
-
-## 奇妙的 Vercel 部署旅程
+## 开始 Vercel 部署旅程
 
 在这段旅程中，我们将遇到三个神秘的平台：**Github** / **Telegram** / **Vercel**，请确保你已经完成了账号的注册，故事将会以所需的[环境变量](#Vercel-Environment-variables-环境变量)为线索，引导你一步步探索。
 
@@ -34,7 +38,7 @@
 
 > “愉快的代码旅程，从部署开始！”
 
-![](assets/hook.png)
+![](https://i.postimg.cc/C5qWP3sL/hook.png)
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fyesmore%2Fgh-buibuibui-tg&env=TG_TOKEN,TG_CHAT_ID,GH_HOOK_SECRET,PROD&envDescription=Environment%20variables%20needed%20to%20setup%20notifier&envLink=https%3A%2F%2Fgithub.com%2Fyesmore%2Fgh-buibuibui-tg%23environment-variables&project-name=gh-buibuibui-tg&repo-name=gh-buibuibui-tg)
 
@@ -48,23 +52,45 @@
 | `PROD`           | Production deployment or not               | `true`                                          |
 
 
-
 ### 支持的 Handlers & TODOs
 
-> 仅支持个人仓库推送，暂不支持组织仓库，欢迎pr
+> 目前仅支持私人仓库推送，暂不支持组织仓库，欢迎pr
 
-- [x] ping
-- [x] star
-- [x] push
-- [x] fork
-- [x] repository
-- [ ] issues
-- [ ] issue_comment
-- [ ] pull_request
-- [ ] member
-- [ ] watch
-- [ ] ...
+<details open>
+  <summary>私人仓库</summary>
 
+  - [x] ping
+  - [x] star
+  - [x] push
+  - [x] fork
+  - [x] repository
+  - [ ] issues
+  - [ ] issue_comment
+  - [ ] pull_request
+  - [ ] member
+  - [ ] watch
+  - [ ] ...
+
+</details>
+
+<details>
+  <summary>组织仓库</summary>
+
+  - [ ] ping
+  - [ ] star
+  - [ ] push
+  - [ ] fork
+  - [ ] repository
+  - [ ] issues
+  - [ ] issue_comment
+  - [ ] pull_request
+  - [ ] member
+  - [ ] watch
+  - [ ] ...
+
+</details>
+
+> 所有 handler 在 [event_handler.js]([/core/event_handler.js](https://github.com/yesmore/gh-buibuibui-tg/blob/main/core/event_handler.js)) 中查看
 
 ### 推送原理
 
@@ -74,6 +100,10 @@ git push -> touch Github webhooks then call Vercel's api (http post) -> catch ev
 
 - [Github Webhooks](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/about-webhooks)
 - [Github Webhooks events ](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/webhook-events-and-payloads)
+
+## 感谢支持
+
+<div><a href="https://jb.gg/OpenSourceSupport"><img  width="30%" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png"></a>
 
 ## 开源许可
 
