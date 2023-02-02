@@ -1,9 +1,10 @@
-const { Expecial_Senders } = require("./constants.js");
+const { Expecial_Senders, IgnoreTypes } = require("./constants.js");
 
 const cl = (text) => {
   if (!text) return "";
   if (text === Expecial_Senders.Github_Action_Bot.org)
     return Expecial_Senders.Github_Action_Bot.want;
+  if (IgnoreTypes.includes(text)) return text;
   return text
     .replace("_", "\\_")
     .replace("*", "\\*")
@@ -67,8 +68,18 @@ const handleRepository = ({
 const handleIssueComment = ({ body, type_msg, sender, repo_full_name }) => {
   const issue = body.issue;
   const comment = body.comment;
+  const repository = body.repository;
 
-  return type_msg + user_name(comment.user) + `: ${comment.body}`;
+  return (
+    type_msg +
+    `Issue: [#${issue.title}「${issue.number}」](${issue.html_url})` +
+    `State: ${issue.state}` +
+    `Comments: ${issue.comments}\n\n` +
+    user_name(comment.user) +
+    ` commented on [#issue](${issue.html_url}): ` +
+    `[${comment.body}](${comment.html_url}) ` +
+    `at ${comment.created_at}`
+  );
 };
 
 // Webhook events
