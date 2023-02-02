@@ -63,7 +63,7 @@ const handleIssues = ({ body, type_msg }) => {
     `${capitalizeFirstLetter(body.action)} issue: [#${issue.title}「#${
       issue.number
     }」](${issue.html_url})\n` +
-    `Leaving comment: ${issue.body}\n\n` +
+    `Leaved comment: ${issue.body}\n\n` +
     user_name(issue.user) +
     ` ${body.action} a issue([#${issue.number}](${issue.html_url})) ` +
     `at ${issue.created_at}`
@@ -75,11 +75,11 @@ const handleIssueComment = ({ body, type_msg }) => {
 
   return (
     type_msg +
-    `Issue: [#${issue.title}「#${issue.number}」](${issue.html_url})\n` +
+    `Issue: [${issue.title}「#${issue.number}」](${issue.html_url})\n` +
     `Issue action: ${body.action}\n` +
     `Total comments: ${issue.comments}\n\n` +
     user_name(comment.user) +
-    ` ${body.action} comment on [#issue${issue.number}](${issue.html_url}): ` +
+    ` ${body.action} comment on [issue#${issue.number}](${issue.html_url}):\n` +
     `${comment.body}\n`
   );
 };
