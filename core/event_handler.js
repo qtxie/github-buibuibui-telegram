@@ -11,6 +11,9 @@ const cl = (text) => {
     .replace("[", "\\[")
     .replace("]", "\\]");
 };
+const capitalizeFirstLetter = (string) => {
+  return string.replace(/^./, string[0].toUpperCase());
+};
 const user_name = (sender) => `[${cl(sender.login)}](${sender.html_url})`;
 
 /**
@@ -75,7 +78,9 @@ const handleIssues = ({ body, type_msg, sender, repo_full_name }) => {
 
   return (
     type_msg +
-    `Open issue: [#${issue.title}「#${issue.number}」](${issue.html_url})\n` +
+    `${capitalizeFirstLetter(body.action)} issue: [#${issue.title}「#${
+      issue.number
+    }」](${issue.html_url})\n` +
     `Leaving comment: [${issue.body}](${issue.html_url})\n\n` +
     user_name(issue.user) +
     ` opened a issue([#${issue.number}](${issue.html_url})) ` +
