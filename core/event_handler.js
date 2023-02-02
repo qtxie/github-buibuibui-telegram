@@ -81,7 +81,7 @@ const handleIssues = ({ body, type_msg, sender, repo_full_name }) => {
     `${capitalizeFirstLetter(body.action)} issue: [#${issue.title}「#${
       issue.number
     }」](${issue.html_url})\n` +
-    `Leaving comment: [${issue.body}](${issue.html_url})\n\n` +
+    `Leaving comment: ${issue.body}\n\n` +
     user_name(issue.user) +
     ` opened a issue([#${issue.number}](${issue.html_url})) ` +
     `at ${issue.created_at}`
@@ -94,11 +94,11 @@ const handleIssueComment = ({ body, type_msg, sender, repo_full_name }) => {
   return (
     type_msg +
     `Issue: [#${issue.title}「#${issue.number}」](${issue.html_url})\n` +
-    `State: ${issue.state}\n` +
-    `Comments: ${issue.comments}\n\n` +
+    `Issue state: ${issue.state}\n` +
+    `Total comments: ${issue.comments}\n\n` +
     user_name(comment.user) +
     ` commented on [#issue${issue.number}](${issue.html_url}): ` +
-    `[${comment.body}](${comment.html_url})\n` +
+    `${comment.body}\n` +
     `at ${comment.updated_at}`
   );
 };
