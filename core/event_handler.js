@@ -72,12 +72,12 @@ const handleIssueComment = ({ body, type_msg, sender, repo_full_name }) => {
 
   return (
     type_msg +
-    `Issue: [#${issue.title}「${issue.number}」](${issue.html_url})` +
-    `State: ${issue.state}` +
+    `Issue: [#${issue.title}「#${issue.number}」](${issue.html_url})\n` +
+    `State: ${issue.state}\n` +
     `Comments: ${issue.comments}\n\n` +
     user_name(comment.user) +
     ` commented on [#issue](${issue.html_url}): ` +
-    `[${comment.body}](${comment.html_url}) ` +
+    `[${comment.body}](${comment.html_url})\n` +
     `at ${comment.created_at}`
   );
 };

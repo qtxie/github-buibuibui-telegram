@@ -77,8 +77,8 @@
   - [x] push
   - [x] fork
   - [x] repository
-  - [ ] issues
-  - [ ] issue_comment
+  - [x] issues
+  - [x] issue_comment
   - [ ] pull_request
   - [ ] member
   - [ ] watch
