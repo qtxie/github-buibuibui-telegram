@@ -84,7 +84,7 @@ const handleIssueComment = ({ body, type_msg }) => {
   );
 };
 const handleTouch = ({ body, type_msg, sender }) => {
-  return `${type_msg}(Unhandle)\n\n` + `${user_name(sender)} done`;
+  return `${type_msg}(Unhandled)\n\n` + `${user_name(sender)} done`;
 };
 
 // Webhook events
@@ -97,6 +97,9 @@ const strategyMap = {
   repository: handleRepository,
   issues: handleIssues,
   issue_comment: handleIssueComment,
+  watch: handleTouch,
+  pull_request: handleTouch,
+  project: handleTouch,
 };
 
 const Factory = ({
@@ -119,7 +122,7 @@ const Factory = ({
       gh_event,
     });
   } else {
-    return handleTouch({ body, type_msg, sender });
+    // return handleTouch({ body, type_msg, sender });
   }
 };
 
