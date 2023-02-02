@@ -97,7 +97,6 @@ const strategyMap = {
   repository: handleRepository,
   issues: handleIssues,
   issue_comment: handleIssueComment,
-  watch: handleTouch,
   pull_request: handleTouch,
   project: handleTouch,
 };
@@ -110,6 +109,7 @@ const Factory = ({
   sender,
   repo_full_name,
   repo_html_url,
+  organization,
 }) => {
   if (strategyMap.hasOwnProperty(gh_event)) {
     return strategyMap[gh_event]({
@@ -120,6 +120,7 @@ const Factory = ({
       repo_full_name,
       repo_html_url,
       gh_event,
+      organization,
     });
   } else {
     // return handleTouch({ body, type_msg, sender });
@@ -133,13 +134,13 @@ module.exports.eventHandler = async function (gh_event, body) {
   const repo_html_url = repo.html_url;
   const sender = body.sender;
   const organization = body.organization;
-  const installation = cl(body.installation);
+  // const installation = cl(body.installation);
 
   const type_msg =
     `操作: *${cl(gh_event).toUpperCase()}*` +
     `\n仓库: [${repo_full_name}](${repo_html_url})\n\n`;
 
-  const result = Factory({
+  return Factory({
     gh_event,
     body,
     action,
@@ -147,6 +148,6 @@ module.exports.eventHandler = async function (gh_event, body) {
     sender,
     repo_full_name,
     repo_html_url,
+    organization,
   });
-  return result;
 };
