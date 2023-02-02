@@ -13,7 +13,6 @@ module.exports = async (req, res) => {
 
   if (method === "POST" && verifyWebhook.verifyWebhook(body, gh_sig_256)) {
     event.eventHandler(gh_event, body).then((Msg) => {
-      console.log(Msg);
       sendMsg
         .sendMsg(Msg)
         .then(() => {

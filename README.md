@@ -67,18 +67,18 @@
 
 ### 支持的 Handlers & TODOs
 
-> 目前仅支持私人仓库推送，暂不支持组织仓库，欢迎pr
+> 每一个 github event 需要对应 handler 处理 => 欢迎pr
 
 <details open>
   <summary>私人仓库</summary>
 
   - [x] ping
-  - [x] star
+  - [x] star - stared/unstared
   - [x] push
   - [x] fork
   - [x] repository
-  - [x] issues
-  - [x] issue_comment
+  - [x] issues - create/close/edit
+  - [x] issue_comment - create/delete/edit
   - [ ] pull_request
   - [ ] member
   - [ ] watch
@@ -90,12 +90,12 @@
   <summary>组织仓库</summary>
 
   - [ ] ping
-  - [ ] star
+  - [ ] star - stared/unstared
   - [ ] push
   - [ ] fork
   - [ ] repository
-  - [ ] issues
-  - [ ] issue_comment
+  - [ ] issues - create/close/edit
+  - [ ] issue_comment - create/delete/edit
   - [ ] pull_request
   - [ ] member
   - [ ] watch

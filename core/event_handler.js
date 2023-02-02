@@ -1,27 +1,9 @@
-const { Expecial_Senders, IgnoreTypes } = require("./constants.js");
+const { cl, capitalizeFirstLetter } = require("./utils.js");
 
-const cl = (text) => {
-  if (!text) return "";
-  if (text === Expecial_Senders.Github_Action_Bot.org)
-    return Expecial_Senders.Github_Action_Bot.want;
-  if (IgnoreTypes.includes(text)) return text;
-  return text
-    .replace("_", "\\_")
-    .replace("*", "\\*")
-    .replace("[", "\\[")
-    .replace("]", "\\]");
-};
-const capitalizeFirstLetter = (string) => {
-  return string.replace(/^./, string[0].toUpperCase());
-};
 const user_name = (sender) => `[${cl(sender.login)}](${sender.html_url})`;
 
-/**
- * Support event handles
- *
- * All Webhook events see
- *  - https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
- * */
+// Support event handles. All Webhook events see:
+// https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
 const handlePing = ({ body, type_msg, sender }) => {
   const zen = cl(body.zen);
   return type_msg + `Zen: ${zen}`;
@@ -73,7 +55,7 @@ const handleRepository = ({
     }) ${action} [${repo_full_name}](${repo_html_url})`
   );
 };
-const handleIssues = ({ body, type_msg, sender, repo_full_name }) => {
+const handleIssues = ({ body, type_msg }) => {
   const issue = body.issue;
 
   return (
@@ -87,7 +69,7 @@ const handleIssues = ({ body, type_msg, sender, repo_full_name }) => {
     `at ${issue.created_at}`
   );
 };
-const handleIssueComment = ({ body, type_msg, sender, repo_full_name }) => {
+const handleIssueComment = ({ body, type_msg }) => {
   const issue = body.issue;
   const comment = body.comment;
 
@@ -101,9 +83,12 @@ const handleIssueComment = ({ body, type_msg, sender, repo_full_name }) => {
     `${comment.body}\n`
   );
 };
+const handleTouch = ({ body, type_msg, sender }) => {
+  return `${type_msg}(Unhandle)\n\n` + `${user_name(sender)} done`;
+};
 
 // Webhook events
-// see https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
+// see https://docs.github.com/zh/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
 const strategyMap = {
   ping: handlePing,
   star: handleStar,
@@ -123,14 +108,19 @@ const Factory = ({
   repo_full_name,
   repo_html_url,
 }) => {
-  return strategyMap[gh_event]({
-    body,
-    action,
-    type_msg,
-    sender,
-    repo_full_name,
-    repo_html_url,
-  });
+  if (strategyMap.hasOwnProperty(gh_event)) {
+    return strategyMap[gh_event]({
+      body,
+      action,
+      type_msg,
+      sender,
+      repo_full_name,
+      repo_html_url,
+      gh_event,
+    });
+  } else {
+    return handleTouch({ body, type_msg, sender });
+  }
 };
 
 module.exports.eventHandler = async function (gh_event, body) {
