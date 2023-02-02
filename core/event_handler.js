@@ -13,7 +13,12 @@ const cl = (text) => {
 };
 const user_name = (sender) => `[${cl(sender.login)}](${sender.html_url})`;
 
-/** support event handles */
+/**
+ * Support event handles
+ *
+ * All Webhook events see
+ *  - https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
+ * */
 const handlePing = ({ body, type_msg, sender }) => {
   const zen = cl(body.zen);
   return type_msg + `Zen: ${zen}`;
@@ -65,10 +70,21 @@ const handleRepository = ({
     }) ${action} [${repo_full_name}](${repo_html_url})`
   );
 };
+const handleIssues = ({ body, type_msg, sender, repo_full_name }) => {
+  const issue = body.issue;
+
+  return (
+    type_msg +
+    `Open issue: [#${issue.title}「#${issue.number}」](${issue.html_url})\n` +
+    `Leaving comment: [${issue.body}](${issue.html_url})\n\n` +
+    user_name(issue.user) +
+    ` opened a issue([#${issue.number}](${issue.html_url})) ` +
+    `at ${issue.created_at}`
+  );
+};
 const handleIssueComment = ({ body, type_msg, sender, repo_full_name }) => {
   const issue = body.issue;
   const comment = body.comment;
-  const repository = body.repository;
 
   return (
     type_msg +
@@ -76,9 +92,9 @@ const handleIssueComment = ({ body, type_msg, sender, repo_full_name }) => {
     `State: ${issue.state}\n` +
     `Comments: ${issue.comments}\n\n` +
     user_name(comment.user) +
-    ` commented on [#issue](${issue.html_url}): ` +
+    ` commented on [#issue${issue.number}](${issue.html_url}): ` +
     `[${comment.body}](${comment.html_url})\n` +
-    `at ${comment.created_at}`
+    `at ${comment.updated_at}`
   );
 };
 
@@ -90,6 +106,7 @@ const strategyMap = {
   push: handlePush,
   fork: handleFork,
   repository: handleRepository,
+  issues: handleIssues,
   issue_comment: handleIssueComment,
 };
 
