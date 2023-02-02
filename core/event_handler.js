@@ -1,5 +1,3 @@
-// Webhook events
-// see https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
 const { Expecial_Senders } = require("./constants.js");
 
 const cl = (text) => {
@@ -12,16 +10,17 @@ const cl = (text) => {
     .replace("[", "\\[")
     .replace("]", "\\]");
 };
+const user_name = (sender) => `[${cl(sender.login)}](${sender.html_url})`;
 
 /** support event handles */
-const handleStar = ({ body, action, type_msg, sender }) => {
-  const done =
-    action === "created" ? "刚刚点了一个赞 :)" : "悄咪咪取消了点赞 :(";
-  return type_msg + `[${cl(sender.login)}](${sender.html_url}) ${done}`;
-};
 const handlePing = ({ body, type_msg, sender }) => {
   const zen = cl(body.zen);
   return type_msg + `Zen: ${zen}`;
+};
+const handleStar = ({ body, action, type_msg, sender }) => {
+  const done =
+    action === "created" ? "刚刚点了一个赞 :)" : "悄咪咪取消了点赞 :(";
+  return type_msg + user_name(sender) + ` ${done}`;
 };
 const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
   const ref = body.ref.split("/", 3)[2];
@@ -35,7 +34,7 @@ const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
 
   return (
     type_msg +
-    `[${cl(sender.login)}](${sender.html_url})` +
+    user_name(sender) +
     ` pushed to [${ref}](${repo_html_url}/tree/${ref}) with ${commits.length} commits ` +
     `([compare](${compare})).` +
     `\n\n*Commits:* ${commits_str}`
@@ -45,9 +44,10 @@ const handleFork = ({ body, type_msg, sender }) => {
   const forkee = body.forkee;
   return (
     type_msg +
-    `[${cl(sender.login)}](${sender.html_url}) forked to [${cl(
-      forkee.full_name
-    )}](${forkee.html_url}) at ${forkee.created_at}`
+    user_name(sender) +
+    ` forked to [${cl(forkee.full_name)}](${forkee.html_url}) at ${
+      forkee.created_at
+    }`
   );
 };
 const handleRepository = ({
@@ -64,13 +64,22 @@ const handleRepository = ({
     }) ${action} [${repo_full_name}](${repo_html_url})`
   );
 };
+const handleIssueComment = ({ body, type_msg, sender, repo_full_name }) => {
+  const issue = body.issue;
+  const comment = body.comment;
 
+  return type_msg + user_name(comment.user) + `: ${comment.body}`;
+};
+
+// Webhook events
+// see https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
 const strategyMap = {
   ping: handlePing,
   star: handleStar,
   push: handlePush,
   fork: handleFork,
   repository: handleRepository,
+  issue_comment: handleIssueComment,
 };
 
 const Factory = ({
