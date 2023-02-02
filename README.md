@@ -65,12 +65,9 @@
 | `PROD`           | Production deployment or not               | `true`                                          |
 
 
-### 支持的 Handlers & TODOs
+### 支持的 Handlers
 
-> 每一个 github event 需要对应 handler 处理 => 欢迎pr
-
-<details open>
-  <summary>私人仓库</summary>
+> 每一个 github event 需要对应 handler 处理([event_handler](/core/event_handler.js)) => 欢迎pr
 
   - [x] ping
   - [x] star - stared/unstared
@@ -79,23 +76,6 @@
   - [x] repository
   - [x] issues - create/close/edit
   - [x] issue_comment - create/delete/edit
-  - [ ] pull_request
-  - [ ] member
-  - [ ] watch
-  - [ ] ...
-
-</details>
-
-<details>
-  <summary>组织仓库</summary>
-
-  - [ ] ping
-  - [ ] star - stared/unstared
-  - [ ] push
-  - [ ] fork
-  - [ ] repository
-  - [ ] issues - create/close/edit
-  - [ ] issue_comment - create/delete/edit
   - [ ] pull_request
   - [ ] member
   - [ ] watch
