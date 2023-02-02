@@ -83,7 +83,7 @@ const handleIssues = ({ body, type_msg, sender, repo_full_name }) => {
     }」](${issue.html_url})\n` +
     `Leaving comment: ${issue.body}\n\n` +
     user_name(issue.user) +
-    ` opened a issue([#${issue.number}](${issue.html_url})) ` +
+    ` ${body.action} a issue([#${issue.number}](${issue.html_url})) ` +
     `at ${issue.created_at}`
   );
 };
