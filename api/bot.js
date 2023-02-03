@@ -1,4 +1,5 @@
 const TelegramBot = require("node-telegram-bot-api");
+const { setTelegramWebhook } = require("../bot/tg_hook.js");
 
 const tgToken = process.env.TG_TOKEN;
 const tgChatId = process.env.TG_CHAT_ID;
@@ -6,7 +7,8 @@ const tgChatId = process.env.TG_CHAT_ID;
 const hookUrl = "https://gh-buibuibui-tg.vercel.app/api/bot";
 
 const bot = new TelegramBot(tgToken, { polling: true });
-bot.setWebHook(`${hookUrl}/bot${tgToken}`);
+// bot.setWebHook(`${hookUrl}/bot${tgToken}`);
+// setTelegramWebhook(hookUrl);
 
 bot.onText(/\/name/, (msg, match) => {
   bot.sendMessage(msg.chat.id, "yesmore");
