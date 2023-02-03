@@ -93,6 +93,7 @@ git push -> touch Github webhooks then call Vercel's api (http post) -> catch ev
 
 - [Github Webhooks](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/about-webhooks)
 - [Github Webhooks events ](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/webhook-events-and-payloads)
+- [Telegram Bot Api](https://core.telegram.org/api)
 
 ## 感谢支持
 
