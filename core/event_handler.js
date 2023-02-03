@@ -26,7 +26,7 @@ const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
   return (
     type_msg +
     user_name(sender) +
-    ` pushed to [${ref}](${repo_html_url}/tree/${ref}) with ${commits.length} commits ` +
+    ` pushed to [${ref}](${repo_html_url}/tree/${ref}) with ${commits.length} commits` +
     `([compare](${compare})).` +
     `\n\n*Commits:* ${commits_str}`
   );

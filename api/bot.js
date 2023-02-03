@@ -3,10 +3,10 @@ const TelegramBot = require("node-telegram-bot-api");
 const tgToken = process.env.TG_TOKEN;
 const tgChatId = process.env.TG_CHAT_ID;
 
-module.exports = async (req, res) => {
+module.exports = async (request, response) => {
   const bot = new TelegramBot(tgToken, { polling: true });
   try {
-    const { body } = req;
+    const { body } = request;
     if (body.message) {
       const {
         chat: { id },
@@ -38,5 +38,5 @@ module.exports = async (req, res) => {
     console.error("Error sending message");
     console.log(error.toString());
   }
-  res.send("OK");
+  response.send("OK");
 };
