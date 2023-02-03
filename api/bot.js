@@ -12,7 +12,8 @@ module.exports = async (request, response) => {
         text,
       } = body.message;
       const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
-      await bot.sendMessage(id, message, { parse_mode: "Markdown" });
+      // await bot.sendMessage(id, message, { parse_mode: "Markdown" });
+      await bot.sendMessage(id, message);
 
       // bot.onText(/\/name/, (msg, match) => {
       //   bot.sendMessage(msg.chat.id, "yesmore");
