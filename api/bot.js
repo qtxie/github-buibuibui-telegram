@@ -1,4 +1,5 @@
 const TelegramBot = require("node-telegram-bot-api");
+const TgOpenApi = require("../utils/tg_open_apis.js");
 
 module.exports = async (request, response) => {
   const tgToken = process.env.TG_TOKEN;
@@ -6,6 +7,7 @@ module.exports = async (request, response) => {
   const bot = new TelegramBot(tgToken);
 
   const { body } = request;
+
   if (body.message) {
     const {
       chat: { id },
@@ -20,10 +22,18 @@ module.exports = async (request, response) => {
     //   bot.sendMessage(msg.chat.id, "yesmore");
     // });
 
-    bot.onText(/\/echo (.+)/, (msg, match) => {
+    bot.onText(/\/name (.+)/, (msg, match) => {
       const chatId = msg.chat.id;
       const resp = match[1];
-      bot.sendMessage(chatId, resp);
+      // bot.sendMessage(chatId, resp);
+      TgOpenApi.sendMsg(resp)
+        .then(() => {
+          response.status(201).send({ status: "ok" });
+        })
+        .catch((err) => {
+          console.log(err);
+          response.status(err.response.status).send(err.response.statusText);
+        });
     });
 
     bot.on("message", (msg) => {
