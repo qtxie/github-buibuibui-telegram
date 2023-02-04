@@ -24,6 +24,6 @@ module.exports = async (req, res) => {
         });
     });
   } else {
-    res.status(402).send();
+    res.status(405).send();
   }
 };
