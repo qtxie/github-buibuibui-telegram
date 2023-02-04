@@ -12,24 +12,24 @@ module.exports = async (request, response) => {
         text,
       } = body.message;
       const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
-      await bot.sendMessage(id, message);
+      // await bot.sendMessage(id, message);
 
       bot.onText(/\/name/, (msg, match) => {
-        bot.sendMessage(msg.chat.id, "yesmore");
+        bot.sendMessage(id, "yesmore");
       });
 
-      // bot.on("message", (msg) => {
-      //   const chatId = msg.chat.id;
-      //   bot.sendMessage(chatId, "'I am alive!'");
-      // });
+      bot.on("message", (msg) => {
+        const chatId = msg.chat.id;
+        bot.sendMessage(id, "'I am alive!'");
+      });
 
-      // bot.on("polling_error", (error) => {
-      //   console.log(error.code); // => 'EFATAL'
-      // });
+      bot.on("polling_error", (error) => {
+        console.log(error.code); // => 'EFATAL'
+      });
 
-      // bot.on("webhook_error", (error) => {
-      //   console.log(error.code); // => 'EPARSE'
-      // });
+      bot.on("webhook_error", (error) => {
+        console.log(error.code); // => 'EPARSE'
+      });
     }
   } catch (error) {
     console.error("Error sending message");
