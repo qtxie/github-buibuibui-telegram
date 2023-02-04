@@ -39,8 +39,8 @@ module.exports = async (request, response) => {
     //   console.log(error.code); // => 'EPARSE'
     // });
 
-    // const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
-    // await bot.sendMessage(id, message);
+    const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
+    await bot.sendMessage(id, message);
   }
 
   response.send("OK");
