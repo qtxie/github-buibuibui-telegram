@@ -3,7 +3,7 @@ const TelegramBot = require("node-telegram-bot-api");
 module.exports = async (request, response) => {
   const tgToken = process.env.TG_TOKEN;
   const tgChatId = process.env.TG_CHAT_ID;
-  const bot = new TelegramBot(tgToken, { polling: true });
+  const bot = new TelegramBot(tgToken);
   try {
     const { body } = request;
     if (body.message) {
@@ -12,7 +12,6 @@ module.exports = async (request, response) => {
         text,
       } = body.message;
       const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
-      // await bot.sendMessage(id, message, { parse_mode: "Markdown" });
       await bot.sendMessage(id, message);
 
       // bot.onText(/\/name/, (msg, match) => {
