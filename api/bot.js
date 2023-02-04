@@ -20,10 +20,11 @@ module.exports = async (request, response) => {
         text,
       } = body.message;
 
-      const pattern = /^\/([\w\u4e00-\u9fa5]+)(?:\s([\w\u4e00-\u9fa5]+))?$/u;
+      const pattern =
+        /^\/([\w\u4e00-\u9fa5]+)(?:\s([\w\u4e00-\u9fa5]+))?(?:-(.+))?$/u;
       let match = pattern.exec(text.trim());
       if (match) {
-        const [, cmd, action] = match;
+        const [, cmd, action, option] = match;
         switch (cmd) {
           case "start":
             await handleStart({ cmd, id, bot });
@@ -34,6 +35,8 @@ module.exports = async (request, response) => {
           case "s":
             await handleSearch({ cmd, action, id, bot });
             break;
+          case "test":
+            await handleUnRegistedCmd({ cmd, id, bot });
           case "help":
           default:
             await handleHelp({ cmd, id, bot });
