@@ -17,12 +17,13 @@ module.exports.handleBotRepo = async ({ cmd, id, bot }) => {
   );
 };
 module.exports.handleHelp = async ({ cmd, id, bot }) => {
-  const content = `欢迎使用 Aka 机器人 :>\n
-  命令列表：
-    /help 查看帮助
-    /repo 机器人仓库
-    /s [option] 资源搜索
-    /start ...
+  const content = () =>
+    `欢迎使用 Aka 机器人 :>\n
+     命令列表：
+     /help - 查看帮助
+     /repo - 机器人仓库
+     /s (option) - 资源搜索
+     /start - 注册
     `;
-  await bot.sendMessage(id, content, message_option);
+  await bot.sendMessage(id, content(), message_option);
 };
