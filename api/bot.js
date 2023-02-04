@@ -34,7 +34,8 @@ module.exports = async (request, response) => {
             await handleName({ cmd, id, bot });
             break;
           case "s":
-            return await handleSearch({ cmd, action, option, id, bot });
+            await handleSearch({ cmd, action, option, id, bot });
+            break;
           case "repo":
             await handleBotRepo({ cmd, id, bot });
             break;
