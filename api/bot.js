@@ -20,10 +20,11 @@ module.exports = async (request, response) => {
       } = body.message;
 
       const pattern =
-        /^\/([\w\u4e00-\u9fa5]+)(?:\s([\w\u4e00-\u9fa5]+))?(?:-(.+))?$/u;
+        /^\/([\w\u4e00-\u9fa5@]+)(?:\s([\w\u4e00-\u9fa5]+))?(?:-(.+))?$/u;
       const match = pattern.exec(text.trim());
       if (match) {
-        const [, cmd, action, option] = match;
+        const [, org_cmd, action, option] = match;
+        const cmd = org_cmd.split("@")[0];
         switch (cmd) {
           case "start":
             await handleStart({ cmd, id, bot });
