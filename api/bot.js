@@ -15,26 +15,26 @@ module.exports = async (request, response) => {
         text,
       } = body.message;
 
-      // if (text === "/name") {
-      //   await bot.sendMessage(id, "yesmore111");
-      // }
+      if (text === "/name") {
+        await bot.sendMessage(id, "yesmore111");
+      }
 
       // bot.onText(/\/name/, (msg, match) => {
       //   bot.sendMessage(msg.chat.id, "yesmore");
       // });
 
-      bot.onText(/\/name (.+)/, (msg, match) => {
+      bot.onText(/\/s (.+)/, async (msg, match) => {
         const chatId = msg.chat.id;
         const resp = match[1];
-        // bot.sendMessage(chatId, resp);
-        TgOpenApi.sendMsg(resp)
-          .then(() => {
-            response.status(201).send({ status: "ok" });
-          })
-          .catch((err) => {
-            console.log(err);
-            response.status(err.response.status).send(err.response.statusText);
-          });
+        await bot.sendMessage(chatId, resp);
+        // TgOpenApi.sendMsg(resp)
+        //   .then(() => {
+        //     response.status(201).send({ status: "ok" });
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //     response.status(err.response.status).send(err.response.statusText);
+        //   });
       });
 
       bot.on("message", (msg) => {
