@@ -26,13 +26,16 @@ module.exports = async (request, response) => {
         const cmd = text.slice(1);
         switch (cmd) {
           case "start":
-            return handleStart({ cmd, id, bot });
+            handleStart({ cmd, id, bot });
+            break;
           case "name":
-            return handleName({ cmd, id, bot });
+            handleName({ cmd, id, bot });
+            break;
           case "s":
-            return handleSearch({ cmd, id, bot });
+            handleSearch({ cmd, id, bot });
+            break;
           default:
-            return handleUnCmd({ cmd, id, bot });
+            handleUnCmd({ cmd, id, bot });
         }
       }
     }
