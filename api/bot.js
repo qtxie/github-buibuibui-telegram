@@ -37,8 +37,6 @@ module.exports = async (request, response) => {
           default:
             await handleHelp({ cmd, id, bot });
         }
-      } else {
-        await handleUnRegistedCmd({ id, bot });
       }
     }
   } catch (error) {
