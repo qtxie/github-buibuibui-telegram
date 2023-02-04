@@ -34,6 +34,7 @@ module.exports = async (request, response) => {
           case "s":
             await handleSearch({ cmd, action, id, bot });
             break;
+          case "help":
           default:
             await handleHelp({ cmd, id, bot });
         }
