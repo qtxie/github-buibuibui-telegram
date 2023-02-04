@@ -19,9 +19,10 @@ module.exports = async (request, response) => {
         text,
       } = body.message;
 
+      const t = text.trim();
       const pattern =
         /^\/([\w\u4e00-\u9fa5@]+)(?:\s([\w\u4e00-\u9fa5]+))?(?:-(.+))?$/u;
-      const match = pattern.exec(text.trim());
+      const match = pattern.exec(t);
       if (match) {
         const [, org_cmd, action, option] = match;
         const cmd = org_cmd.split("@")[0];
@@ -33,8 +34,7 @@ module.exports = async (request, response) => {
             await handleName({ cmd, id, bot });
             break;
           case "s":
-            await handleSearch({ cmd, action, option, id, bot });
-            break;
+            return await handleSearch({ cmd, action, option, id, bot });
           case "repo":
             await handleBotRepo({ cmd, id, bot });
             break;

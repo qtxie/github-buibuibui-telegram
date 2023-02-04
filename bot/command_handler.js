@@ -7,7 +7,7 @@ module.exports.handleName = async ({ cmd, id, bot }) => {
   await bot.sendMessage(id, "yesmore", message_option);
 };
 module.exports.handleSearch = async ({ cmd, action, option, id, bot }) => {
-  await bot.sendMessage(id, `search: ${action - option}`, message_option);
+  await bot.sendMessage(id, `search: ${action} - ${option}`, message_option);
 };
 module.exports.handleBotRepo = async ({ cmd, id, bot }) => {
   await bot.sendMessage(
