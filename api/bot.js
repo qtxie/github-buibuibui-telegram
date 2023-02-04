@@ -3,7 +3,8 @@ const {
   handleName,
   handleSearch,
   handleStart,
-  handleUnCmd,
+  handleUnRegistedCmd,
+  handleHelp,
 } = require("../bot/command_handler.js");
 
 module.exports = async (request, response) => {
@@ -19,24 +20,25 @@ module.exports = async (request, response) => {
         text,
       } = body.message;
 
-      if (
-        Object.prototype.toString.call(text) === "[object String]" &&
-        text.startsWith("/")
-      ) {
-        const cmd = text.slice(1);
+      const pattern = /^\/([\w\u4e00-\u9fa5]+)(?:\s([\w\u4e00-\u9fa5]+))?$/u;
+      let match = pattern.exec(text.trim());
+      if (match) {
+        const [, cmd, action] = match;
         switch (cmd) {
           case "start":
-            handleStart({ cmd, id, bot });
+            await handleStart({ cmd, id, bot });
             break;
           case "name":
-            handleName({ cmd, id, bot });
+            await handleName({ cmd, id, bot });
             break;
           case "s":
-            handleSearch({ cmd, id, bot });
+            await handleSearch({ cmd, action, id, bot });
             break;
           default:
-            handleUnCmd({ cmd, id, bot });
+            await handleHelp({ cmd, id, bot });
         }
+      } else {
+        await handleUnRegistedCmd({ id, bot });
       }
     }
   } catch (error) {
