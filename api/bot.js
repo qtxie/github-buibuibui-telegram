@@ -24,7 +24,7 @@ module.exports = async (request, response) => {
         text.startsWith("/")
       ) {
         const cmd = text.slice(1);
-        switch (cmd.trim().toLowerCase()) {
+        switch (cmd) {
           case "start":
             return handleStart({ cmd, id, bot });
           case "name":
