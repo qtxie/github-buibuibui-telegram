@@ -1,10 +1,14 @@
 const TelegramBot = require("node-telegram-bot-api");
-const TgOpenApi = require("../utils/tg_open_apis.js");
+const {
+  handleName,
+  handleSearch,
+  handleStart,
+  handleUnCmd,
+} = require("../bot/command_handler.js");
 
 module.exports = async (request, response) => {
   try {
     const tgToken = process.env.TG_TOKEN;
-    const tgChatId = process.env.TG_CHAT_ID;
     const bot = new TelegramBot(tgToken);
 
     const { body } = request;
@@ -15,44 +19,26 @@ module.exports = async (request, response) => {
         text,
       } = body.message;
 
-      switch (text) {
-        case "/name":
-          await bot.sendMessage(id, "yesmore");
-          break;
-        case "/s":
-          await bot.sendMessage(id, "search");
-          break;
-        default:
-          bot.sendMessage(id, "未知命令");
+      if (
+        Object.prototype.toString.call(text) === "[object String]" &&
+        text.startsWith("/")
+      ) {
+        const cmd = text.slice(1);
+        switch (cmd.trim().toLowerCase()) {
+          case "start":
+            return handleStart({ cmd, id, bot });
+          case "name":
+            return handleName({ cmd, id, bot });
+          case "s":
+            return handleSearch({ cmd, id, bot });
+          default:
+            return handleUnCmd({ cmd, id, bot });
+        }
       }
-
-      // const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
-      // await bot.sendMessage(id, message);
     }
-  } catch (error) {}
+  } catch (error) {
+    response.send("something wrong!");
+  }
 
   response.send("OK");
 };
-
-// bot.onText(/\/s (.+)/, async (msg, match) => {
-//   const chatId = msg.chat.id;
-//   const resp = match[1];
-//   await bot.sendMessage(chatId, resp);
-// });
-
-// bot.onText(/\/name/, (msg, match) => {
-//   bot.sendMessage(msg.chat.id, "yesmore");
-// });
-
-// bot.on("message", (msg) => {
-//   const chatId = msg.chat.id;
-//   bot.sendMessage(chatId, "'I am alive!'");
-// });
-
-// bot.on("polling_error", (error) => {
-//   console.log(error.code); // => 'EFATAL'
-// });
-
-// bot.on("webhook_error", (error) => {
-//   console.log(error.code); // => 'EPARSE'
-// });
