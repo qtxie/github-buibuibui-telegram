@@ -17,8 +17,8 @@ module.exports.handleBotRepo = async ({ cmd, id, bot }) => {
   );
 };
 module.exports.handleHelp = async ({ cmd, id, bot }) => {
-  const content = () =>
-    `欢迎使用 Aka 机器人 :>\n
+  const content = () => `
+     欢迎使用 Aka 机器人 :>\n
      命令列表：
      /help - 查看帮助
      /repo - 机器人仓库
