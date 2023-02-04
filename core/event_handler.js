@@ -1,4 +1,4 @@
-const { cl, capitalizeFirstLetter } = require("./utils.js");
+const { cl, capitalizeFirstLetter } = require("../utils/index.js");
 
 const user_name = (sender) => `[${cl(sender.login)}](${sender.html_url})`;
 

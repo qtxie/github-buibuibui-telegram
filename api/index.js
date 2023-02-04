@@ -1,9 +1,7 @@
 const event = require("../core/event_handler.js");
-const sendMsg = require("../core/send_msg.js");
+const TgOpenApi = require("../utils/tg_open_apis.js");
 const verifyWebhook = require("../core/verify_webhook.js");
 
-// The main, exported, function of the endpoint,
-// dealing with the request and subsequent response
 module.exports = async (req, res) => {
   const body = req.body;
   const method = req.method;
@@ -13,8 +11,7 @@ module.exports = async (req, res) => {
 
   if (method === "POST" && verifyWebhook.verifyWebhook(body, gh_sig_256)) {
     event.eventHandler(gh_event, body).then((Msg) => {
-      sendMsg
-        .sendMsg(Msg)
+      TgOpenApi.sendMsg(Msg)
         .then(() => {
           res.status(201).send({ status: "ok" });
         })
@@ -24,6 +21,6 @@ module.exports = async (req, res) => {
         });
     });
   } else {
-    res.status(405).send();
+    res.status(403).send();
   }
 };

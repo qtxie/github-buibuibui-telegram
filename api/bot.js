@@ -14,9 +14,9 @@ module.exports = async (request, response) => {
       const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
       await bot.sendMessage(id, message);
 
-      // bot.onText(/\/name/, (msg, match) => {
-      //   bot.sendMessage(msg.chat.id, "yesmore");
-      // });
+      bot.onText(/\/name/, (msg, match) => {
+        bot.sendMessage(msg.chat.id, "yesmore");
+      });
 
       // bot.on("message", (msg) => {
       //   const chatId = msg.chat.id;
@@ -32,8 +32,6 @@ module.exports = async (request, response) => {
       // });
     }
   } catch (error) {
-    // If there was an error sending our message then we
-    // can log it into the Vercel console
     console.error("Error sending message");
     console.log(error.toString());
   }
