@@ -4,41 +4,44 @@ module.exports = async (request, response) => {
   const tgToken = process.env.TG_TOKEN;
   const tgChatId = process.env.TG_CHAT_ID;
   const bot = new TelegramBot(tgToken);
-  try {
-    const { body } = request;
-    if (body.message) {
-      const {
-        chat: { id },
-        text,
-      } = body.message;
 
-      if (text === "/name") {
-        await bot.sendMessage(id, "yesmore111");
-      }
+  const { body } = request;
+  if (body.message) {
+    const {
+      chat: { id },
+      text,
+    } = body.message;
 
-      bot.onText(/\/name/, async (msg, match) => {
-        await bot.sendMessage(msg.chat.id, "yesmore");
-      });
+    // if (text === "/name") {
+    //   await bot.sendMessage(id, "yesmore111");
+    // }
 
-      bot.on("message", (msg) => {
-        const chatId = msg.chat.id;
-        bot.sendMessage(chatId, "'I am alive!'");
-      });
+    // bot.onText(/\/name/, (msg, match) => {
+    //   bot.sendMessage(msg.chat.id, "yesmore");
+    // });
 
-      bot.on("polling_error", (error) => {
-        console.log(error.code); // => 'EFATAL'
-      });
+    bot.onText(/\/echo (.+)/, (msg, match) => {
+      const chatId = msg.chat.id;
+      const resp = match[1];
+      bot.sendMessage(chatId, resp);
+    });
 
-      bot.on("webhook_error", (error) => {
-        console.log(error.code); // => 'EPARSE'
-      });
+    bot.on("message", (msg) => {
+      const chatId = msg.chat.id;
+      bot.sendMessage(chatId, "'I am alive!'");
+    });
 
-      // const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
-      // await bot.sendMessage(id, message);
-    }
-  } catch (error) {
-    console.error("Error sending message");
-    console.log(error.toString());
+    // bot.on("polling_error", (error) => {
+    //   console.log(error.code); // => 'EFATAL'
+    // });
+
+    // bot.on("webhook_error", (error) => {
+    //   console.log(error.code); // => 'EPARSE'
+    // });
+
+    // const message = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
+    // await bot.sendMessage(id, message);
   }
+
   response.send("OK");
 };
