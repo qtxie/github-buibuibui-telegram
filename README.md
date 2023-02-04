@@ -18,8 +18,6 @@
 借助 Github 的 Webhooks、Vercel's Serverless API 和 Telegram Bot，连接 Github 和 Telegram，在 Telegram chat 中接收仓库的消息。
 
 > 效果：你给仓库 [yesmore/aka.js](https://github.com/yesmore/aka.js) 点了 star，你的 telegram 频道/群组将会收到一个包含各种元数据(可选)的点赞信息, 其他 Github 事件同理。
->
-> 这是部署在我的 tg 群组([https://t.me/yesmore_cc](https://t.me/yesmore_cc))推送，欢迎加入～
 
 <table style="border:none">
 <tr>
@@ -27,6 +25,8 @@
 <td align='center'><img src='https://i.postimg.cc/hjwk0Dx5/deploy2.png'/></td>
 </tr>
 </table>
+
+> 这是部署在我的 tg 群组([https://t.me/yesmore_cc](https://t.me/yesmore_cc))推送，并且添加了一下机器人交互指令，发送 `/help` 查看使用说明，欢迎加入～
 
 ## 开始 Vercel 部署旅程
 

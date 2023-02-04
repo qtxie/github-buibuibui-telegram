@@ -3,7 +3,7 @@ const {
   handleName,
   handleSearch,
   handleStart,
-  handleUnRegistedCmd,
+  handleBotRepo,
   handleHelp,
 } = require("../bot/command_handler.js");
 
@@ -13,7 +13,6 @@ module.exports = async (request, response) => {
     const bot = new TelegramBot(tgToken);
 
     const { body } = request;
-
     if (body.message) {
       const {
         chat: { id },
@@ -22,7 +21,7 @@ module.exports = async (request, response) => {
 
       const pattern =
         /^\/([\w\u4e00-\u9fa5]+)(?:\s([\w\u4e00-\u9fa5]+))?(?:-(.+))?$/u;
-      let match = pattern.exec(text.trim());
+      const match = pattern.exec(text.trim());
       if (match) {
         const [, cmd, action, option] = match;
         switch (cmd) {
@@ -33,13 +32,16 @@ module.exports = async (request, response) => {
             await handleName({ cmd, id, bot });
             break;
           case "s":
-            await handleSearch({ cmd, action, id, bot });
+            await handleSearch({ cmd, action, option, id, bot });
             break;
-          case "test":
-            await handleUnRegistedCmd({ cmd, id, bot });
+          case "repo":
+            await handleBotRepo({ cmd, id, bot });
+            break;
           case "help":
-          default:
             await handleHelp({ cmd, id, bot });
+            break;
+          default:
+            await bot.sendMessage(id, "你在找我咩？发送 /help 查看帮助");
         }
       }
     }
