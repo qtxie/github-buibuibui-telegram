@@ -10,7 +10,7 @@ module.exports = async (request, response) => {
   try {
     const tgToken = process.env.TG_TOKEN;
     const tgChatId = process.env.TG_CHAT_ID;
-    const org_chat_id = tgChatId.toString().slice(4);
+    // const org_chat_id = tgChatId.toString().slice(4);
 
     const bot = new TelegramBot(tgToken);
 
@@ -21,11 +21,6 @@ module.exports = async (request, response) => {
         text,
       } = body.message;
 
-      // if (org_chat_id === id.toString()) {
-      //   id = tgChatId;
-      // }
-      // id = tgChatId;
-
       const t = text.trim();
       const pattern =
         /^\/([\w\u4e00-\u9fa5@]+)(?:\s([\w\u4e00-\u9fa5]+))?(?:-(.+))?$/u;
@@ -35,24 +30,23 @@ module.exports = async (request, response) => {
         const cmd = org_cmd.split("@")[0];
         switch (cmd) {
           case "start":
-            await handleStart({ cmd, id, bot });
+            handleStart({ cmd, id, bot });
             break;
           case "name":
-            await handleName({ cmd, id, bot });
+            handleName({ cmd, id, bot });
             break;
           case "s":
-            await handleSearch({ cmd, action, option, id, bot });
+            handleSearch({ cmd, action, option, id, bot });
             break;
           case "help":
-            await handleHelp({ cmd, id, bot });
+            handleHelp({ cmd, id, bot });
             break;
           default:
-            await bot.sendMessage(id, "你在找我咩？发送 /help 查看帮助");
-            break;
+            bot.sendMessage(id, "你在找我咩？发送 /help 查看帮助");
         }
       }
     }
-    // return response.send("OK");
+    response.send("OK");
   } catch (error) {
     return response.send(error);
   }
