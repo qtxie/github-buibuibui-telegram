@@ -21,9 +21,10 @@ module.exports = async (request, response) => {
         text,
       } = body.message;
 
-      if (org_chat_id === id.toString()) {
-        id = tgChatId;
-      }
+      // if (org_chat_id === id.toString()) {
+      //   id = tgChatId;
+      // }
+      id = tgChatId;
 
       const t = text.trim();
       const pattern =
@@ -53,6 +54,6 @@ module.exports = async (request, response) => {
     }
     return response.send("OK");
   } catch (error) {
-    return response.status(403).send(error.message);
+    return response.send(error);
   }
 };
