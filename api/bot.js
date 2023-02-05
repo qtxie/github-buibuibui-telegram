@@ -24,7 +24,7 @@ module.exports = async (request, response) => {
       // if (org_chat_id === id.toString()) {
       //   id = tgChatId;
       // }
-      id = tgChatId;
+      // id = tgChatId;
 
       const t = text.trim();
       const pattern =
@@ -52,7 +52,7 @@ module.exports = async (request, response) => {
         }
       }
     }
-    return response.send("OK");
+    // return response.send("OK");
   } catch (error) {
     return response.send(error);
   }
