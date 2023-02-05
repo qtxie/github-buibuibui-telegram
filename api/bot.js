@@ -9,6 +9,9 @@ const {
 module.exports = async (request, response) => {
   try {
     const tgToken = process.env.TG_TOKEN;
+    const tgChatId = process.env.TG_CHAT_ID;
+    const org_chat_id = tgChatId.toString().slice(4);
+
     const bot = new TelegramBot(tgToken);
 
     const { body } = request;
@@ -17,6 +20,10 @@ module.exports = async (request, response) => {
         chat: { id },
         text,
       } = body.message;
+
+      if (org_chat_id === id.toString()) {
+        id = tgChatId;
+      }
 
       const t = text.trim();
       const pattern =
