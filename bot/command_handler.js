@@ -3,8 +3,8 @@ const TgOpenApi = require("../utils/tg_open_apis.js");
 const message_option = { parse_mode: "Markdown" };
 
 module.exports.handleStart = async ({ cmd, id, bot }) => {
-  TgOpenApi.sendMsg("hello hello111");
-  // await bot.sendMessage(id, "hello hello", message_option);
+  // TgOpenApi.sendMsg("hello hello111");
+  await bot.sendMessage(id, "hello hello", message_option);
 };
 module.exports.handleName = async ({ cmd, id, bot }) => {
   await bot.sendMessage(id, "yesmore", message_option);
