@@ -3,7 +3,6 @@ const {
   handleName,
   handleSearch,
   handleStart,
-  handleBotRepo,
   handleHelp,
 } = require("../bot/command_handler.js");
 
@@ -35,9 +34,6 @@ module.exports = async (request, response) => {
             break;
           case "s":
             await handleSearch({ cmd, action, option, id, bot });
-            break;
-          case "repo":
-            await handleBotRepo({ cmd, id, bot });
             break;
           case "help":
             await handleHelp({ cmd, id, bot });
