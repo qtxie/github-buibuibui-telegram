@@ -44,8 +44,8 @@ module.exports = async (request, response) => {
         }
       }
     }
-    response.send("OK");
+    return response.send("OK");
   } catch (error) {
-    return response.status(500).send(e.message);
+    return response.status(403).send(error.message);
   }
 };
