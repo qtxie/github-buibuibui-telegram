@@ -40,12 +40,12 @@ module.exports = async (request, response) => {
             break;
           default:
             await bot.sendMessage(id, "你在找我咩？发送 /help 查看帮助");
+            break;
         }
       }
     }
+    response.send("OK");
   } catch (error) {
-    response.send("something wrong!");
+    return response.status(500).send(e.message);
   }
-
-  response.send("OK");
 };
