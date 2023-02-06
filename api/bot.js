@@ -51,10 +51,11 @@ module.exports = async (request, response) => {
         const [, org_cmd, action, option] = match;
         const cmd = org_cmd.split("@")[0];
         const reply_to = `回复 ${username} 指令 /${cmd}\n`;
-        const msg_head = `${reply_to}${"—".repeat(reply_to.length ?? 10)}`;
+        const msg_head = `${reply_to}${"-".repeat(reply_to.length ?? 10)}`;
         cmd_factory({ msg_head, cmd, action, option, id, bot });
       }
     }
+
     response.send("der");
   } catch (error) {
     return response.send(error);
