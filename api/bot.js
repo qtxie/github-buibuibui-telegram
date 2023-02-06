@@ -61,9 +61,9 @@ module.exports = async (request, response) => {
       }
       response.status(201).send({ status: "ok" });
     } else {
-      response.status(403).send();
+      return response.status(403).send();
     }
   } catch (e) {
-    response.status(501).send(e.message);
+    return response.status(501).send(e.message);
   }
 };
