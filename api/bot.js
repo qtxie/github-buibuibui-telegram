@@ -24,7 +24,11 @@ const cmd_factory = ({ msg_head, cmd, action, option, id, bot }) => {
 };
 
 module.exports = async (request, response) => {
-  if (body.message && body.message.text.startsWith("/")) {
+  if (
+    request.body &&
+    request.body.message &&
+    request.body.message.text.startsWith("/")
+  ) {
     const tgToken = process.env.TG_TOKEN;
     const tgChatId = process.env.TG_CHAT_ID;
 
