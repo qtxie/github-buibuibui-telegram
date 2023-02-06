@@ -25,7 +25,7 @@ const cmd_factory = ({ msg_head, cmd, action, option, id, bot }) => {
 
 module.exports = async (request, response) => {
   // Todo
-  console.log("请求日志:", request.body);
+  console.log("请求日志:", request.body, request.body.entities);
   if (
     request.body &&
     request.body.message &&
@@ -55,7 +55,7 @@ module.exports = async (request, response) => {
     if (match) {
       const [, org_cmd, action, option] = match;
       const cmd = org_cmd.split("@")[0];
-      const msg_head = `回复 ${username} 指令/${cmd}:`;
+      const msg_head = `回复 ${username} 指令 /${cmd}:`;
       cmd_factory({ msg_head, cmd, action, option, id, bot });
     }
     response.status(201).send({ status: "ok" });
