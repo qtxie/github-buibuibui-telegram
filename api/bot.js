@@ -6,6 +6,20 @@ const {
   handleHelp,
 } = require("../bot/command_handler.js");
 
+const cmd_map = {
+  name: handleName,
+  search: handleSearch,
+  start: handleStart,
+  help: handleHelp,
+};
+const cmd_factory = ({ cmd, action, option, id, bot }) => {
+  if (cmd_map.hasOwnProperty(cmd)) {
+    cmd_map[cmd]({ cmd, action, option, id, bot });
+  } else {
+    bot.sendMessage(id, "你在找 @akajs_bot 小助手咩？发送 /help 查看帮助");
+  }
+};
+
 module.exports = async (request, response) => {
   try {
     const tgToken = process.env.TG_TOKEN;
@@ -28,25 +42,30 @@ module.exports = async (request, response) => {
       if (match) {
         const [, org_cmd, action, option] = match;
         const cmd = org_cmd.split("@")[0];
-        switch (cmd) {
-          case "start":
-            handleStart({ cmd, id, bot });
-            break;
-          case "name":
-            handleName({ cmd, id, bot });
-            break;
-          case "s":
-            handleSearch({ cmd, action, option, id, bot });
-            break;
-          case "help":
-            handleHelp({ cmd, id, bot });
-            break;
-          default:
-            bot.sendMessage(id, "你在找我咩？发送 /help 查看帮助");
-        }
+
+        cmd_factory({ cmd, action, option, id, bot });
+        // switch (cmd) {
+        //   case "start":
+        //     handleStart({ cmd, id, bot });
+        //     break;
+        //   case "name":
+        //     handleName({ cmd, id, bot });
+        //     break;
+        //   case "s":
+        //     handleSearch({ cmd, action, option, id, bot });
+        //     break;
+        //   case "help":
+        //     handleHelp({ cmd, id, bot });
+        //     break;
+        //   default:
+        //     bot.sendMessage(
+        //       id,
+        //       "你在找@akajs_bot小助手咩？发送 /help 查看帮助"
+        //     );
+        // }
       }
     }
-    response.send("OK");
+    response.send("der");
   } catch (error) {
     return response.send(error);
   }
