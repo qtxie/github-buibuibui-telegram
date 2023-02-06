@@ -59,8 +59,8 @@ module.exports = async (request, response) => {
         const msg_head = `回复 ${username} 指令 /${cmd}:`;
         cmd_factory({ msg_head, cmd, action, option, id, bot });
       }
-      response.status(201).send({ status: "ok" });
     }
+    response.status(201).send({ status: "ok" });
   } catch (e) {
     return response.status(501).send(e.message);
   }
