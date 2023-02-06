@@ -29,6 +29,7 @@ module.exports = async (request, response) => {
   if (
     request.body &&
     request.body.message &&
+    request.body.message.text &&
     request.body.message.text.startsWith("/")
   ) {
     const tgToken = process.env.TG_TOKEN;
