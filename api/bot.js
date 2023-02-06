@@ -32,8 +32,8 @@ module.exports = async (request, response) => {
 
     const { body } = request;
     // Todo
-    console.log("请求日志:", request);
     if (body.message && body.message.text.startsWith("/")) {
+      console.log("请求日志:", body);
       const {
         chat: { id },
         from,
