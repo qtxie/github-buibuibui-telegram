@@ -60,8 +60,6 @@ module.exports = async (request, response) => {
         cmd_factory({ msg_head, cmd, action, option, id, bot });
       }
       response.status(201).send({ status: "ok" });
-    } else {
-      return response.status(403).send();
     }
   } catch (e) {
     return response.status(501).send(e.message);
