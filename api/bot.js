@@ -24,6 +24,8 @@ const cmd_factory = ({ msg_head, cmd, action, option, id, bot }) => {
 };
 
 module.exports = async (request, response) => {
+  // Todo
+  console.log("请求日志:", request.body);
   if (
     request.body &&
     request.body.message &&
@@ -35,8 +37,7 @@ module.exports = async (request, response) => {
     const bot = new TelegramBot(tgToken);
 
     const { body } = request;
-    // Todo
-    console.log("请求日志:", body);
+
     const {
       chat: { id },
       from,
@@ -53,8 +54,7 @@ module.exports = async (request, response) => {
     if (match) {
       const [, org_cmd, action, option] = match;
       const cmd = org_cmd.split("@")[0];
-      const reply_to = `回复 ${username} 指令 /${cmd}\n`;
-      const msg_head = `${reply_to}${"-".repeat(reply_to.length ?? 10)}`;
+      const msg_head = `回复 ${username} 指令/${cmd}:`;
       cmd_factory({ msg_head, cmd, action, option, id, bot });
     }
     response.status(201).send({ status: "ok" });

@@ -16,7 +16,7 @@ module.exports.handleSearch = async ({ msg_head, action, option, id, bot }) => {
 };
 module.exports.handleHelp = async ({ msg_head, id, bot }) => {
   const content = () => `
-${msg_head}\n
+${msg_head}
 欢迎使用 Aka 小助手 :>\n
 指令列表：
 /help - 查看帮助
