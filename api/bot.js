@@ -4,11 +4,14 @@ const {
   handleSearch,
   handleStart,
   handleHelp,
+  handleUnknowCmd,
 } = require("../bot/command_handler.js");
 
+const pattern =
+  /^\/([\w\u4e00-\u9fa5@]+)(?:\s([\w\u4e00-\u9fa5]+))?(?:-(.+))?$/u;
 const cmd_map = {
   name: handleName,
-  search: handleSearch,
+  s: handleSearch,
   start: handleStart,
   help: handleHelp,
 };
@@ -16,7 +19,7 @@ const cmd_factory = ({ cmd, action, option, id, bot }) => {
   if (cmd_map.hasOwnProperty(cmd)) {
     cmd_map[cmd]({ cmd, action, option, id, bot });
   } else {
-    bot.sendMessage(id, "你在找 @akajs_bot 小助手咩？发送 /help 查看帮助");
+    handleUnknowCmd({ id, bot });
   }
 };
 
@@ -29,6 +32,9 @@ module.exports = async (request, response) => {
     const bot = new TelegramBot(tgToken);
 
     const { body } = request;
+    // Todo
+    console.log(request);
+    console.log("请求体", body);
     if (body.message) {
       const {
         chat: { id },
@@ -36,33 +42,11 @@ module.exports = async (request, response) => {
       } = body.message;
 
       const t = text.trim();
-      const pattern =
-        /^\/([\w\u4e00-\u9fa5@]+)(?:\s([\w\u4e00-\u9fa5]+))?(?:-(.+))?$/u;
       const match = pattern.exec(t);
       if (match) {
         const [, org_cmd, action, option] = match;
         const cmd = org_cmd.split("@")[0];
-
         cmd_factory({ cmd, action, option, id, bot });
-        // switch (cmd) {
-        //   case "start":
-        //     handleStart({ cmd, id, bot });
-        //     break;
-        //   case "name":
-        //     handleName({ cmd, id, bot });
-        //     break;
-        //   case "s":
-        //     handleSearch({ cmd, action, option, id, bot });
-        //     break;
-        //   case "help":
-        //     handleHelp({ cmd, id, bot });
-        //     break;
-        //   default:
-        //     bot.sendMessage(
-        //       id,
-        //       "你在找@akajs_bot小助手咩？发送 /help 查看帮助"
-        //     );
-        // }
       }
     }
     response.send("der");

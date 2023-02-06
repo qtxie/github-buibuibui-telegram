@@ -1,5 +1,5 @@
 <div align="center">
-    <h1><code>Github buibuibui Telegram</code></h1> 
+    <h1>Github buibuibui Telegram</h1> 
 </div>
 
 <!-- <div align="center">
@@ -26,7 +26,7 @@
 </tr>
 </table>
 
-> 这是部署在我的 tg 群组([https://t.me/yesmore_cc](https://t.me/yesmore_cc))推送，并且添加了一下机器人交互指令，发送 `/help` 查看使用说明，欢迎加入～
+> 这是部署在我的 tg 群组：[https://t.me/yesmore_cc](https://t.me/yesmore_cc)，并附带了一些机器人交互指令，发送 `/help` 查看使用说明，欢迎加入～
 
 ## 开始 Vercel 部署旅程
 
@@ -94,6 +94,7 @@ git push -> touch Github webhooks then call Vercel's api (http post) -> catch ev
 - [Github Webhooks](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/about-webhooks)
 - [Github Webhooks events ](https://docs.github.com/zh/developers/webhooks-and-events/webhooks/webhook-events-and-payloads)
 - [Telegram Bot Api](https://core.telegram.org/api)
+- [Telegram Bot API for NodeJS](https://github.com/yagop/node-telegram-bot-api)
 
 ## 感谢支持
 
@@ -101,4 +102,4 @@ git push -> touch Github webhooks then call Vercel's api (http post) -> catch ev
 
 ## 开源许可
 
-gh-buibuibui-tg is open source software licensed as GPL.
+gh-buibuibui-tg is open source software licensed as [GPL](/LICENSE).
