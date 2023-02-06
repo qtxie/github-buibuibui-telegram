@@ -27,19 +27,19 @@ module.exports = async (request, response) => {
   try {
     // Todo
     console.log("请求日志:", request.body, request.body.entities);
+
+    const tgToken = process.env.TG_TOKEN;
+    const tgChatId = process.env.TG_CHAT_ID;
+
+    const bot = new TelegramBot(tgToken);
+
+    const { body } = request;
     if (
-      request.body &&
-      request.body.message &&
-      request.body.message.text &&
-      request.body.message.text.startsWith("/")
+      body &&
+      body.message &&
+      body.message.text &&
+      body.message.text.startsWith("/")
     ) {
-      const tgToken = process.env.TG_TOKEN;
-      const tgChatId = process.env.TG_CHAT_ID;
-
-      const bot = new TelegramBot(tgToken);
-
-      const { body } = request;
-
       const {
         chat: { id },
         from,
