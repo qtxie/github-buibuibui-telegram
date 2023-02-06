@@ -15,11 +15,11 @@ const cmd_map = {
   start: handleStart,
   help: handleHelp,
 };
-const cmd_factory = ({ cmd, action, option, id, bot }) => {
+const cmd_factory = ({ msg_head, cmd, action, option, id, bot }) => {
   if (cmd_map.hasOwnProperty(cmd)) {
-    cmd_map[cmd]({ cmd, action, option, id, bot });
+    cmd_map[cmd]({ msg_head, cmd, action, option, id, bot });
   } else {
-    handleUnknowCmd({ id, bot });
+    handleUnknowCmd({ msg_head, id, bot });
   }
 };
 
@@ -33,20 +33,29 @@ module.exports = async (request, response) => {
 
     const { body } = request;
     // Todo
-    console.log(request);
     console.log("请求体", body);
-    if (body.message) {
+    if (body.message && body.message.text.startsWith("/")) {
       const {
         chat: { id },
+        from,
         text,
+        date,
       } = body.message;
+
+      const date_time = new Date(parseInt(date) * 1000)
+        .toLocaleString()
+        .split(" ")[1];
+      const username = from.username
+        ? `@${from.username}`
+        : `@${from.first_name} ${from.last_name}`;
 
       const t = text.trim();
       const match = pattern.exec(t);
       if (match) {
         const [, org_cmd, action, option] = match;
         const cmd = org_cmd.split("@")[0];
-        cmd_factory({ cmd, action, option, id, bot });
+        const msg_head = `回复 ${username} 命令 /${cmd} ${date_time}`;
+        cmd_factory({ msg_head, cmd, action, option, id, bot });
       }
     }
     response.send("der");

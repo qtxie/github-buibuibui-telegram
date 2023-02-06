@@ -2,18 +2,23 @@
 
 const message_option = { parse_mode: "Markdown" };
 
-module.exports.handleStart = async ({ cmd, id, bot }) => {
+module.exports.handleStart = async ({ msg_head, id, bot }) => {
   // sendMessage Api see https://github.com/yagop/node-telegram-bot-api/blob/master/doc/api.md#telegrambotsendmessagechatid-text-options--promise
-  bot.sendMessage(id, "hello hello", message_option);
+  bot.sendMessage(id, `${msg_head}\nhello hello`, message_option);
 };
-module.exports.handleName = async ({ cmd, id, bot }) => {
-  bot.sendMessage(id, "yesmore", message_option);
+module.exports.handleName = async ({ msg_head, id, bot }) => {
+  bot.sendMessage(id, `${msg_head}\nyesmore`, message_option);
 };
-module.exports.handleSearch = async ({ cmd, action, option, id, bot }) => {
-  bot.sendMessage(id, `search: ${action} - ${option}`, message_option);
+module.exports.handleSearch = async ({ msg_head, action, option, id, bot }) => {
+  bot.sendMessage(
+    id,
+    `${msg_head}\nsearch: ${action} - ${option}`,
+    message_option
+  );
 };
-module.exports.handleHelp = async ({ cmd, id, bot }) => {
+module.exports.handleHelp = async ({ msg_head, id, bot }) => {
   const content = () => `
+${msg_head}\n
 欢迎使用 Aka 小助手 :>\n
 命令列表：
 /help - 查看帮助
