@@ -24,42 +24,46 @@ const cmd_factory = ({ msg_head, cmd, action, option, id, bot }) => {
 };
 
 module.exports = async (request, response) => {
-  // Todo
-  console.log("请求日志:", request.body, request.body.entities);
-  if (
-    request.body &&
-    request.body.message &&
-    request.body.message.text &&
-    request.body.message.text.startsWith("/")
-  ) {
-    const tgToken = process.env.TG_TOKEN;
-    const tgChatId = process.env.TG_CHAT_ID;
+  try {
+    // Todo
+    console.log("请求日志:", request.body, request.body.entities);
+    if (
+      request.body &&
+      request.body.message &&
+      request.body.message.text &&
+      request.body.message.text.startsWith("/")
+    ) {
+      const tgToken = process.env.TG_TOKEN;
+      const tgChatId = process.env.TG_CHAT_ID;
 
-    const bot = new TelegramBot(tgToken);
+      const bot = new TelegramBot(tgToken);
 
-    const { body } = request;
+      const { body } = request;
 
-    const {
-      chat: { id },
-      from,
-      text,
-      date,
-    } = body.message;
+      const {
+        chat: { id },
+        from,
+        text,
+        date,
+      } = body.message;
 
-    const username = from.username
-      ? `@${from.username}`
-      : `@${from.first_name} ${from.last_name}`;
+      const username = from.username
+        ? `@${from.username}`
+        : `@${from.first_name} ${from.last_name}`;
 
-    const t = text.trim();
-    const match = pattern.exec(t);
-    if (match) {
-      const [, org_cmd, action, option] = match;
-      const cmd = org_cmd.split("@")[0];
-      const msg_head = `回复 ${username} 指令 /${cmd}:`;
-      cmd_factory({ msg_head, cmd, action, option, id, bot });
+      const t = text.trim();
+      const match = pattern.exec(t);
+      if (match) {
+        const [, org_cmd, action, option] = match;
+        const cmd = org_cmd.split("@")[0];
+        const msg_head = `回复 ${username} 指令 /${cmd}:`;
+        cmd_factory({ msg_head, cmd, action, option, id, bot });
+      }
+      response.status(201).send({ status: "ok" });
+    } else {
+      response.status(403).send();
     }
-    response.status(201).send({ status: "ok" });
-  } else {
-    response.status(403).send();
+  } catch (e) {
+    response.status(501).send(e.message);
   }
 };
