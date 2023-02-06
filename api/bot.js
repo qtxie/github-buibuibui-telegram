@@ -27,13 +27,12 @@ module.exports = async (request, response) => {
   try {
     const tgToken = process.env.TG_TOKEN;
     const tgChatId = process.env.TG_CHAT_ID;
-    // const org_chat_id = tgChatId.toString().slice(4);
 
     const bot = new TelegramBot(tgToken);
 
     const { body } = request;
     // Todo
-    console.log("请求体", body);
+    console.log("请求日志:", request);
     if (body.message && body.message.text.startsWith("/")) {
       const {
         chat: { id },
@@ -42,9 +41,6 @@ module.exports = async (request, response) => {
         date,
       } = body.message;
 
-      const date_time = new Date(parseInt(date) * 1000)
-        .toLocaleString()
-        .split(" ")[1];
       const username = from.username
         ? `@${from.username}`
         : `@${from.first_name} ${from.last_name}`;
@@ -54,7 +50,8 @@ module.exports = async (request, response) => {
       if (match) {
         const [, org_cmd, action, option] = match;
         const cmd = org_cmd.split("@")[0];
-        const msg_head = `回复 ${username} 命令 /${cmd} ${date_time}`;
+        const reply_to = `回复 ${username} 指令 /${cmd}\n`;
+        const msg_head = `${reply_to}${"—".repeat(reply_to.length ?? 10)}`;
         cmd_factory({ msg_head, cmd, action, option, id, bot });
       }
     }

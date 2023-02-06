@@ -1,9 +1,7 @@
-// const TgOpenApi = require("../utils/tg_open_apis.js");
-
+// sendMessage Api see https://github.com/yagop/node-telegram-bot-api/blob/master/doc/api.md#telegrambotsendmessagechatid-text-options--promise
 const message_option = { parse_mode: "Markdown" };
 
 module.exports.handleStart = async ({ msg_head, id, bot }) => {
-  // sendMessage Api see https://github.com/yagop/node-telegram-bot-api/blob/master/doc/api.md#telegrambotsendmessagechatid-text-options--promise
   bot.sendMessage(id, `${msg_head}\nhello hello`, message_option);
 };
 module.exports.handleName = async ({ msg_head, id, bot }) => {
@@ -20,7 +18,7 @@ module.exports.handleHelp = async ({ msg_head, id, bot }) => {
   const content = () => `
 ${msg_head}\n
 欢迎使用 Aka 小助手 :>\n
-命令列表：
+指令列表：
 /help - 查看帮助
 /start - 激活
 /s (option) - 资源搜索
