@@ -24,50 +24,46 @@ const cmd_factory = async ({ msg_head, cmd, action, option, id, bot }) => {
 };
 
 module.exports = async (request, response) => {
-  try {
-    // Todo
-    console.log("请求日志:", request, request.body);
+  console.log("请求日志:", request, request.body);
 
-    const tgToken = process.env.TG_TOKEN;
-    const tgChatId = process.env.TG_CHAT_ID;
+  const tgToken = process.env.TG_TOKEN;
+  const tgChatId = process.env.TG_CHAT_ID;
 
-    const bot = new TelegramBot(tgToken);
+  const bot = new TelegramBot(tgToken);
 
-    const { body } = request;
-    if (
-      body &&
-      body.message &&
-      body.message.text &&
-      body.message.text.startsWith("/")
-    ) {
-      const {
-        chat: { id },
-        from,
-        text,
-      } = body.message;
+  const { body } = request;
+  if (
+    body &&
+    body.message &&
+    body.message.text &&
+    body.message.text.startsWith("/")
+  ) {
+    const {
+      chat: { id },
+      from,
+      text,
+    } = body.message;
 
-      const username = from.username
-        ? `@${from.username}`
-        : `@${from.first_name} ${from.last_name}`;
+    const username = from.username
+      ? `@${from.username}`
+      : `@${from.first_name} ${from.last_name}`;
 
-      const t = text.trim();
-      const match = pattern.exec(t);
-      if (match) {
-        const [, org_cmd, action, option] = match;
-        const cmd = org_cmd.split("@")[0];
-        const msg_head = `回复 ${username} 指令 /${cmd}:\n`;
-        cmd_factory({ msg_head, cmd, action, option, id, bot })
-          .then(() => {
-            response.status(201).send({ status: "ok" });
-          })
-          .catch((err) => {
-            console.log(err);
-            res.status(err.response.status).send(err.response.statusText);
-          });
-      }
+    const t = text.trim();
+    const match = pattern.exec(t);
+    if (match) {
+      const [, org_cmd, action, option] = match;
+      const cmd = org_cmd.split("@")[0];
+      const msg_head = `回复 ${username} 指令 /${cmd}:\n`;
+      cmd_factory({ msg_head, cmd, action, option, id, bot })
+        .then(() => {
+          response.status(201).send({ status: "ok" });
+        })
+        .catch((err) => {
+          console.log(err);
+          response.status(err.response.status).send(err.response.statusText);
+        });
     }
+  } else {
     response.status(403).send({ status: "ok" });
-  } catch (e) {
-    return response.status(501).send(e.message);
   }
 };
