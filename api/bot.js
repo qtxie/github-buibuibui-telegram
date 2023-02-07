@@ -8,6 +8,7 @@ const {
 
 const pattern =
   /^\/([\w\u4e00-\u9fa5@]+)(?:\s([\w\u4e00-\u9fa5]+))?(?:-(.+))?$/u;
+const message_option = { parse_mode: "Markdown" };
 const cmd_map = {
   s: async ({ msg_head, action, option, id, bot }) => {
     await bot.sendMessage(
@@ -76,7 +77,7 @@ module.exports = async (request, response) => {
           })
           .catch((err) => {
             console.log(err);
-            response.status(err.response.status).send(err.response.statusText);
+            response.status(402).send(err);
           });
       }
     }
