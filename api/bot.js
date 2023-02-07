@@ -15,9 +15,9 @@ const cmd_map = {
   start: handleStart,
   help: handleHelp,
 };
-const cmd_factory = ({ msg_head, cmd, action, option, id, bot }) => {
+const cmd_factory = async ({ msg_head, cmd, action, option, id, bot }) => {
   if (cmd_map.hasOwnProperty(cmd)) {
-    cmd_map[cmd]({ msg_head, cmd, action, option, id, bot });
+    await cmd_map[cmd]({ msg_head, cmd, action, option, id, bot });
   } else {
     handleUnknowCmd({ msg_head, id, bot });
   }
@@ -56,10 +56,17 @@ module.exports = async (request, response) => {
         const [, org_cmd, action, option] = match;
         const cmd = org_cmd.split("@")[0];
         const msg_head = `回复 ${username} 指令 /${cmd}:\n`;
-        cmd_factory({ msg_head, cmd, action, option, id, bot });
+        cmd_factory({ msg_head, cmd, action, option, id, bot })
+          .then(() => {
+            response.status(201).send({ status: "ok" });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(err.response.status).send(err.response.statusText);
+          });
       }
     }
-    response.status(201).send({ status: "ok" });
+    response.status(403).send({ status: "ok" });
   } catch (e) {
     return response.status(501).send(e.message);
   }
