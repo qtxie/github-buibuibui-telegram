@@ -26,7 +26,7 @@ const cmd_factory = ({ msg_head, cmd, action, option, id, bot }) => {
 module.exports = async (request, response) => {
   try {
     // Todo
-    console.log("请求日志:", request.body, request.body.entities);
+    console.log("请求日志:", request, request.body);
 
     const tgToken = process.env.TG_TOKEN;
     const tgChatId = process.env.TG_CHAT_ID;
@@ -44,7 +44,6 @@ module.exports = async (request, response) => {
         chat: { id },
         from,
         text,
-        date,
       } = body.message;
 
       const username = from.username
@@ -56,7 +55,7 @@ module.exports = async (request, response) => {
       if (match) {
         const [, org_cmd, action, option] = match;
         const cmd = org_cmd.split("@")[0];
-        const msg_head = `回复 ${username} 指令 /${cmd}:`;
+        const msg_head = `回复 ${username} 指令 /${cmd}:\n`;
         cmd_factory({ msg_head, cmd, action, option, id, bot });
       }
     }
