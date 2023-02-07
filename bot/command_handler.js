@@ -2,13 +2,13 @@
 const message_option = { parse_mode: "Markdown" };
 
 module.exports.handleStart = async ({ msg_head, id, bot }) => {
-  bot.sendMessage(id, `${msg_head}\nhello hello`, message_option);
+  await bot.sendMessage(id, `${msg_head}\nhello hello`, message_option);
 };
 module.exports.handleName = async ({ msg_head, id, bot }) => {
-  bot.sendMessage(id, `${msg_head}\nyesmore`, message_option);
+  await bot.sendMessage(id, `${msg_head}\nyesmore`, message_option);
 };
 module.exports.handleSearch = async ({ msg_head, action, option, id, bot }) => {
-  bot.sendMessage(
+  await bot.sendMessage(
     id,
     `${msg_head}\nsearch: ${action} - ${option}`,
     message_option
@@ -23,10 +23,10 @@ ${msg_head}
 /start - 激活
 /s (option) - 资源搜索
     `;
-  bot.sendMessage(id, content(), message_option);
+  await bot.sendMessage(id, content(), message_option);
 };
-module.exports.handleUnknowCmd = ({ id, bot }) => {
-  bot.sendMessage(
+module.exports.handleUnknowCmd = async ({ id, bot }) => {
+  await bot.sendMessage(
     id,
     "你在找 @akajs_bot 小助手咩？\n发送 /help 查看帮助.",
     message_option

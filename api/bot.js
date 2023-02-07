@@ -19,7 +19,7 @@ const cmd_factory = async ({ msg_head, cmd, action, option, id, bot }) => {
   if (cmd_map.hasOwnProperty(cmd)) {
     await cmd_map[cmd]({ msg_head, cmd, action, option, id, bot });
   } else {
-    handleUnknowCmd({ msg_head, id, bot });
+    await handleUnknowCmd({ msg_head, id, bot });
   }
 };
 
@@ -62,6 +62,8 @@ module.exports = async (request, response) => {
           console.log(err);
           response.status(err.response.status).send(err.response.statusText);
         });
+    } else {
+      response.status(403).send({ status: "jump" });
     }
   } else {
     response.status(403).send({ status: "ok" });
