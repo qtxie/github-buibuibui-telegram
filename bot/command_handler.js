@@ -4,9 +4,6 @@ const message_option = { parse_mode: "Markdown" };
 module.exports.handleStart = async ({ msg_head, id, bot }) => {
   await bot.sendMessage(id, `${msg_head}\nhello hello`, message_option);
 };
-module.exports.handleName = async ({ msg_head, id, bot }) => {
-  await bot.sendMessage(id, `${msg_head}\nyesmore`, message_option);
-};
 module.exports.handleSearch = async ({ msg_head, action, option, id, bot }) => {
   await bot.sendMessage(
     id,
