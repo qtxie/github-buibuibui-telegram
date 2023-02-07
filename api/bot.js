@@ -71,18 +71,17 @@ module.exports = async (request, response) => {
         const [, org_cmd, action, option] = match;
         const cmd = org_cmd.split("@")[0];
         const msg_head = `回复 ${username} 指令 /${cmd}:\n`;
-        cmd_factory({ msg_head, cmd, action, option, id, bot })
-          .then(() => {
-            response.status(201).send({ status: "ok" });
-          })
-          .catch((err) => {
-            console.log(err);
-            response.status(402).send(err);
-          });
+        // cmd_factory({ msg_head, cmd, action, option, id, bot })
+        await bot.sendMessage(
+          id,
+          `${msg_head}\n你在找 @akajs_bot 小助手咩？\n发送 /help 查看帮助.`,
+          message_option
+        );
       }
     }
-    response.status(403).send();
+    // response.status(403).send();
   } catch (error) {
     response.status(503).send(error);
   }
+  response.status(201).send();
 };
