@@ -27,7 +27,7 @@ const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
     type_msg +
     user_name(sender) +
     ` pushed to [${ref}](${repo_html_url}/tree/${ref}) with ${commits.length} commits` +
-    `([compare](${compare})).` +
+    `([compare](${compare}))` +
     `\n\n*Commits:* ${commits_str}`
   );
 };
@@ -72,8 +72,7 @@ const handleIssueComment = ({ body, type_msg }) => {
   return (
     type_msg +
     user_name(comment.user) +
-    ` ${body.action} comment on [issue#${issue.number}](${issue.html_url}):\n` +
-    `${comment.html_url}\n`
+    ` ${body.action} [comment](${comment.html_url}) on [issue#${issue.number}](${issue.html_url})`
   );
 };
 const handleTouch = ({ body, type_msg, sender }) => {
