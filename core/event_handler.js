@@ -10,7 +10,7 @@ const handlePing = ({ body, type_msg, sender }) => {
 };
 const handleStar = ({ body, action, type_msg, sender }) => {
   const done =
-    action === "created" ? "刚刚点了一个赞 :)" : "悄咪咪取消了点赞 :(";
+    action === "created" ? "just starred :)" : "unstarred :(";
   return type_msg + user_name(sender) + ` ${done}`;
 };
 const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
@@ -60,12 +60,8 @@ const handleIssues = ({ body, type_msg }) => {
 
   return (
     type_msg +
-    `${capitalizeFirstLetter(body.action)} issue: [#${issue.title}「#${
-      issue.number
-    }」](${issue.html_url})\n` +
-    `Leaved comment: ${issue.body}\n\n` +
     user_name(issue.user) +
-    ` ${body.action} a issue([#${issue.number}](${issue.html_url})) ` +
+    ` ${body.action} [issue#${issue.number}](${issue.html_url}): ${issue.title}\n\n` +
     `at ${issue.created_at}`
   );
 };
@@ -75,12 +71,9 @@ const handleIssueComment = ({ body, type_msg }) => {
 
   return (
     type_msg +
-    `Issue: [${issue.title}「#${issue.number}」](${issue.html_url})\n` +
-    `Issue action: ${body.action}\n` +
-    `Total comments: ${issue.comments}\n\n` +
     user_name(comment.user) +
     ` ${body.action} comment on [issue#${issue.number}](${issue.html_url}):\n` +
-    `${comment.body}\n`
+    `${comment.url}\n`
   );
 };
 const handleTouch = ({ body, type_msg, sender }) => {
@@ -137,8 +130,7 @@ module.exports.eventHandler = async function (gh_event, body) {
   // const installation = cl(body.installation);
 
   const type_msg =
-    `操作: *${cl(gh_event).toUpperCase()}*` +
-    `\n仓库: [${repo_full_name}](${repo_html_url})\n\n`;
+    `*${cl(gh_event).toUpperCase()}* - [${repo_full_name}](${repo_html_url})\n\n`;
 
   return Factory({
     gh_event,
