@@ -36,9 +36,7 @@ const handleFork = ({ body, type_msg, sender }) => {
   return (
     type_msg +
     user_name(sender) +
-    ` forked to [${cl(forkee.full_name)}](${forkee.html_url}) at ${
-      forkee.created_at
-    }`
+    ` forked to [${cl(forkee.full_name)}](${forkee.html_url})`
   );
 };
 const handleRepository = ({
@@ -61,8 +59,7 @@ const handleIssues = ({ body, type_msg }) => {
   return (
     type_msg +
     user_name(issue.user) +
-    ` ${body.action} [issue#${issue.number}](${issue.html_url}): ${issue.title}\n\n` +
-    `at ${issue.created_at}`
+    ` ${body.action} [issue#${issue.number}](${issue.html_url}): ${issue.title}`
   );
 };
 const handleIssueComment = ({ body, type_msg }) => {
