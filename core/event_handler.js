@@ -73,7 +73,7 @@ const handleIssueComment = ({ body, type_msg }) => {
     type_msg +
     user_name(comment.user) +
     ` ${body.action} comment on [issue#${issue.number}](${issue.html_url}):\n` +
-    `${comment.url}\n`
+    `${comment.html_url}\n`
   );
 };
 const handleTouch = ({ body, type_msg, sender }) => {
