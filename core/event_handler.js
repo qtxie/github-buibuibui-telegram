@@ -65,12 +65,11 @@ const handleIssues = ({ body, type_msg }) => {
   }
 
   if (body.action === "assigned") {
-    const assignees = cl(issue.assignee.name);
     return (
       type_msg +
       user_name(issue.user) +
       ` ${body.action} [issue#${issue.number}](${issue.html_url}): ${issue.title}\n` +
-      `to: ${assignees}`
+      `to: ${body.assignee.name}`
     );
   }
 };
@@ -114,7 +113,7 @@ const strategyMap = {
   repository: handleRepository,
   issues: handleIssues,
   issue_comment: handleIssueComment,
-  pull_request: handlePullRequest,
+  pull_request: handleIssues,
   project: handleTouch,
 };
 
