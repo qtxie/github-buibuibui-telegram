@@ -65,11 +65,12 @@ const handleIssues = ({ body, type_msg }) => {
   }
 
   if (body.action === "assigned") {
+    const assignees = issue.assignees.map(assignee => cl(assignee.name)).join(", ");
     return (
       type_msg +
       user_name(issue.user) +
       ` ${body.action} [issue#${issue.number}](${issue.html_url}): ${issue.title}\n` +
-      `to: ${issue.assignees}`
+      `to: ${assignees}`
     );
   }
 };
@@ -77,14 +78,29 @@ const handleIssueComment = ({ body, type_msg }) => {
   const issue = body.issue;
   const comment = body.comment;
 
-  if (body.action === "created") {
+  const pr = issue.pull_request
+
+  //if (body.action === "created") {
     return (
       type_msg +
       user_name(comment.user) +
-      ` ${body.action} [comment](${comment.html_url}) on [issue#${issue.number}](${issue.html_url})`
+      ` ${body.action} [comment](${comment.html_url}) on ${pr} [#${issue.number}](${issue.html_url})`
+    );
+  //}
+};
+
+const handlePullRequest = ({ body, type_msg }) => {
+  const pr  = body.pull_request;
+
+  if (body.action === "created" || body.action === 'closed') {
+    return (
+      type_msg +
+      user_name(pr.user) +
+      ` ${body.action} [pull request#${pr.number}](${pr.html_url})`
     );
   }
 };
+
 const handleTouch = ({ body, type_msg, sender }) => {
   return `${type_msg}(Unhandled)\n\n` + `${user_name(sender)} done`;
 };
@@ -99,7 +115,7 @@ const strategyMap = {
   repository: handleRepository,
   issues: handleIssues,
   issue_comment: handleIssueComment,
-  pull_request: handleTouch,
+  pull_request: handlePullRequest,
   project: handleTouch,
 };
 
