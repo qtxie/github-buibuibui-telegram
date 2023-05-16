@@ -65,7 +65,7 @@ const handleIssues = ({ body, type_msg }) => {
   }
 
   if (body.action === "assigned") {
-    const assignees = issue.assignees.map(assignee => cl(assignee.name)).join(", ");
+    const assignees = cl(issue.assignee.name);
     return (
       type_msg +
       user_name(issue.user) +
@@ -78,15 +78,14 @@ const handleIssueComment = ({ body, type_msg }) => {
   const issue = body.issue;
   const comment = body.comment;
 
-  const pr = issue.pull_request
-
-  //if (body.action === "created") {
+  if (body.action === "created") {
+    const name = issue.pull_request ? "pull request" : "issue";
     return (
       type_msg +
       user_name(comment.user) +
-      ` ${body.action} [comment](${comment.html_url}) on ${pr} [#${issue.number}](${issue.html_url})`
+      ` ${body.action} [comment](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url})`
     );
-  //}
+  }
 };
 
 const handlePullRequest = ({ body, type_msg }) => {
