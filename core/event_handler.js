@@ -57,7 +57,7 @@ const handleIssues = ({ body, type_msg }) => {
   const issue = body.issue ? body.issue : body.pull_request;
   const name = body.issue ? "issue" : "pull request";
 
-  if (body.action === "created" || body.action === 'closed') {
+  if (body.action === "opened" || body.action === 'closed') {
     return (
       type_msg +
       user_name(issue.user) +
