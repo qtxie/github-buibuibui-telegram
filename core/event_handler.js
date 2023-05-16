@@ -54,23 +54,23 @@ const handleRepository = ({
   );
 };
 const handleIssues = ({ body, type_msg }) => {
-  const issue = body.issue;
+  const issue = body.issue ? body.issue : body.pull_request;
+  const name = body.issue ? "issue" : "pull request";
 
   if (body.action === "created" || body.action === 'closed') {
     return (
       type_msg +
       user_name(issue.user) +
-      ` ${body.action} [issue#${issue.number}](${issue.html_url}): ${issue.title}`
+      ` ${body.action} [${name}#${issue.number}](${issue.html_url}): ${issue.title}`
     );
   }
 
   if (body.action === "assigned") {
-    const assignees = issue.assignees.map(a => cl(a.login)).join(", ");
     return (
       type_msg +
       user_name(issue.user) +
-      ` ${body.action} [issue#${issue.number}](${issue.html_url}): ${issue.title}\n` +
-      `to: ${assignees}`
+      ` ${body.action} [${name}#${issue.number}](${issue.html_url}): ${issue.title}\n` +
+      `to: ` + user_name(body.assignee)
     );
   }
 };
@@ -84,18 +84,6 @@ const handleIssueComment = ({ body, type_msg }) => {
       type_msg +
       user_name(comment.user) +
       ` ${body.action} [comment](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url})`
-    );
-  }
-};
-
-const handlePullRequest = ({ body, type_msg }) => {
-  const pr  = body.pull_request;
-
-  if (body.action === "created" || body.action === 'closed') {
-    return (
-      type_msg +
-      user_name(pr.user) +
-      ` ${body.action} [pull request#${pr.number}](${pr.html_url})`
     );
   }
 };
