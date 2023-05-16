@@ -6,5 +6,6 @@ module.exports.IgnoreTypes = [
   "issue_comment",
   "commit_comment",
   "pull_request",
+  "workflow_run",
   "deployment_status",
 ];

@@ -99,12 +99,14 @@ const handleIssueComment = ({ body, type_msg }) => {
 const handleWorkflowRun = ({ body, type_msg }) => {
   const run = body.workflow_run;
 
-  const commit = run.head_commit;
+  if (body.action === "completed" {
+    const commit = run.head_commit;
   return (
     type_msg +
     `[workflow run#${run.run_number}](${run.html_url}) failed!\n\n` +
-    `Commit: [${commit.message}](${commit.url})`
+    `Commit: ${commit.message}`
   );
+  }
 
   if (body.action === "completed" && run.conclusion === 'failure') {
     const commit = run.head_commit;
