@@ -65,11 +65,12 @@ const handleIssues = ({ body, type_msg }) => {
   }
 
   if (body.action === "assigned") {
+    const assignees = issue.assignees.map(a => cl(a.login)).join(", ");
     return (
       type_msg +
       user_name(issue.user) +
       ` ${body.action} [issue#${issue.number}](${issue.html_url}): ${issue.title}\n` +
-      `to: ${body.assignee.name}`
+      `to: ${assignees}`
     );
   }
 };
