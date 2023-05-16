@@ -56,11 +56,22 @@ const handleRepository = ({
 const handleIssues = ({ body, type_msg }) => {
   const issue = body.issue;
 
-  return (
-    type_msg +
-    user_name(issue.user) +
-    ` ${body.action} [issue#${issue.number}](${issue.html_url}): ${issue.title}`
-  );
+  if (body.action === "created" || body.action === 'closed') {
+    return (
+      type_msg +
+      user_name(issue.user) +
+      ` ${body.action} [issue#${issue.number}](${issue.html_url}): ${issue.title}`
+    );
+  }
+
+  if (body.action === "assigned") {
+    return (
+      type_msg +
+      user_name(issue.user) +
+      ` ${body.action} [issue#${issue.number}](${issue.html_url}): ${issue.title}\n` +
+      `to: ${issue.assignees}`
+    );
+  }
 };
 const handleIssueComment = ({ body, type_msg }) => {
   const issue = body.issue;
