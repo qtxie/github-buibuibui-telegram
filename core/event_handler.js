@@ -66,11 +66,13 @@ const handleIssueComment = ({ body, type_msg }) => {
   const issue = body.issue;
   const comment = body.comment;
 
-  return (
-    type_msg +
-    user_name(comment.user) +
-    ` ${body.action} [comment](${comment.html_url}) on [issue#${issue.number}](${issue.html_url})`
-  );
+  if (body.action === "created") {
+    return (
+      type_msg +
+      user_name(comment.user) +
+      ` ${body.action} [comment](${comment.html_url}) on [issue#${issue.number}](${issue.html_url})`
+    );
+  }
 };
 const handleTouch = ({ body, type_msg, sender }) => {
   return `${type_msg}(Unhandled)\n\n` + `${user_name(sender)} done`;
@@ -80,7 +82,7 @@ const handleTouch = ({ body, type_msg, sender }) => {
 // see https://docs.github.com/zh/developers/webhooks-and-events/webhooks/webhook-events-and-payloads
 const strategyMap = {
   ping: handlePing,
-  star: handleStar,
+  //star: handleStar,
   push: handlePush,
   fork: handleFork,
   repository: handleRepository,
