@@ -73,6 +73,14 @@ const handleIssues = ({ body, type_msg }) => {
       `to: ` + user_name(body.assignee)
     );
   }
+
+  if (body.action == "ready_for_review") {
+    return (
+      type_msg +
+      `[${name}#${issue.number}](${issue.html_url}): ${issue.title}\n` +
+      "is ready for review."
+    );
+  }
 };
 const handleIssueComment = ({ body, type_msg }) => {
   const issue = body.issue;
@@ -84,6 +92,19 @@ const handleIssueComment = ({ body, type_msg }) => {
       type_msg +
       user_name(comment.user) +
       ` ${body.action} [comment](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url})`
+    );
+  }
+};
+
+const handleWorkflowRun = ({ body, type_msg }) => {
+  const run = body.workflow_run;
+
+  if (body.action === "completed" && run.conclusion === 'failure') {
+    const commit = run.head_commit;
+    return (
+      type_msg +
+      `[workflow run#${run.run_number}](${run.html_url} failed!\n\n` +
+      `Commit: [${commit.message}](${commit.url})`
     );
   }
 };
@@ -103,6 +124,7 @@ const strategyMap = {
   issues: handleIssues,
   issue_comment: handleIssueComment,
   pull_request: handleIssues,
+  workflow_run: handleWorkflowRun,
   project: handleTouch,
 };
 
