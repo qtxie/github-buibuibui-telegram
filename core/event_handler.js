@@ -99,7 +99,7 @@ const handleIssueComment = ({ body, type_msg }) => {
 const handleWorkflowRun = ({ body, type_msg }) => {
   const run = body.workflow_run;
 
-  if (body.action === "completed" {
+  if (body.action === "completed") {
     const commit = run.head_commit;
   return (
     type_msg +
