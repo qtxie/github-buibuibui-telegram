@@ -65,22 +65,22 @@ const handleIssues = ({ body, type_msg }) => {
     );
   }
 
-  if (body.action === "assigned") {
-    return (
-      type_msg +
-      user_name(issue.user) +
-      ` ${body.action} [${name}#${issue.number}](${issue.html_url}): ${issue.title}\n` +
-      `to: ` + user_name(body.assignee)
-    );
-  }
+  // if (body.action === "assigned") {
+  //   return (
+  //     type_msg +
+  //     user_name(body.sender) +
+  //     ` ${body.action} [${name}#${issue.number}](${issue.html_url}): ${issue.title}\n` +
+  //     `to: ` + user_name(body.assignee)
+  //   );
+  // }
 
-  if (body.action == "ready_for_review") {
-    return (
-      type_msg +
-      `[${name}#${issue.number}](${issue.html_url}): ${issue.title}\n` +
-      "is ready for review."
-    );
-  }
+  // if (body.action == "ready_for_review") {
+  //   return (
+  //     type_msg +
+  //     `[${name}#${issue.number}](${issue.html_url}): ${issue.title}\n` +
+  //     "is ready for review."
+  //   );
+  // }
 };
 const handleIssueComment = ({ body, type_msg }) => {
   const issue = body.issue;

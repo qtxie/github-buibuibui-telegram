@@ -21,6 +21,7 @@ module.exports = async (req, res) => {
         });
     });
   } else {
-    res.status(403).send();
+    //res.status(403).send();
+    res.status(201).send({ status: "ok" });
   }
 };
