@@ -24,7 +24,7 @@ const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
   }
 
   return (
-    type_msg +
+    "*Push* - " + type_msg +
     user_name(sender) +
     ` pushed to [${ref}](${repo_html_url}/tree/${ref}) with ${commits.length} commits` +
     `([compare](${compare}))` +
@@ -47,7 +47,7 @@ const handleRepository = ({
   repo_html_url,
 }) => {
   return (
-    type_msg +
+    "*Repository* - " + type_msg +
     `[${cl(sender.login)}](${
       sender.html_url
     }) ${action} [${repo_full_name}](${repo_html_url})`
@@ -59,6 +59,7 @@ const handleIssues = ({ body, type_msg, sender }) => {
 
   if (body.action === "opened" || body.action === 'closed') {
     return (
+      `*${capitalizeFirstLetter(name)} ${capitalizeFirstLetter(body.action)}* - ` +
       type_msg +
       user_name(sender) +
       ` ${body.action} [${name}#${issue.number}](${issue.html_url}): ${issue.title}`
@@ -89,6 +90,7 @@ const handleIssueComment = ({ body, type_msg }) => {
   if (body.action === "created") {
     const name = issue.pull_request ? "pull request" : "issue";
     return (
+      `*${capitalizeFirstLetter(name)} Commented* - ` +
       type_msg +
       user_name(comment.user) +
       ` ${body.action} [comment](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url})`
@@ -102,7 +104,7 @@ const handleWorkflowRun = ({ body, type_msg }) => {
   if (body.action === "completed" && run.conclusion === 'failure') {
     const commit = run.head_commit;
     return (
-      type_msg +
+      "*Workflow Run Failed* - " + type_msg +
       `[workflow run#${run.run_number}](${run.html_url}) failed!\n\n` +
       `Commit: ${commit.message}`
     );
@@ -119,7 +121,7 @@ const strategyMap = {
   ping: handlePing,
   //star: handleStar,
   push: handlePush,
-  fork: handleFork,
+  //fork: handleFork,
   repository: handleRepository,
   issues: handleIssues,
   issue_comment: handleIssueComment,
@@ -164,7 +166,7 @@ module.exports.eventHandler = async function (gh_event, body) {
   // const installation = cl(body.installation);
 
   const type_msg =
-    `*${cl(gh_event).toUpperCase()}* - [${repo_full_name}](${repo_html_url})\n\n`;
+    `[${repo_full_name}](${repo_html_url})\n\n`;
 
   return Factory({
     gh_event,
