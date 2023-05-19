@@ -53,14 +53,14 @@ const handleRepository = ({
     }) ${action} [${repo_full_name}](${repo_html_url})`
   );
 };
-const handleIssues = ({ body, type_msg }) => {
+const handleIssues = ({ body, type_msg, sender }) => {
   const issue = body.issue ? body.issue : body.pull_request;
   const name = body.issue ? "issue" : "pull request";
 
   if (body.action === "opened" || body.action === 'closed') {
     return (
       type_msg +
-      user_name(issue.user) +
+      user_name(sender) +
       ` ${body.action} [${name}#${issue.number}](${issue.html_url}): ${issue.title}`
     );
   }
