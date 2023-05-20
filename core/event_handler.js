@@ -18,17 +18,12 @@ const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
   const commits = body.commits;
   const compare = body.compare;
 
-  commits_str = "";
-  for (let commit of commits) {
-    commits_str = commits_str + `[${commit.message}](${commit.url})\n`;
-  }
+  commits_str = commits.length > 1 ? "commits" : "commit";
 
   return (
     "*Push* - " + type_msg +
     user_name(sender) +
-    ` pushed to [${ref}](${repo_html_url}/tree/${ref}) with ${commits.length} commits` +
-    `([compare](${compare}))` +
-    `\n\n*Commits:* ${commits_str}`
+    ` pushed [${commits.length} ${commits_str}](${compare}) to [${ref}](${repo_html_url}/tree/${ref})`
   );
 };
 const handleFork = ({ body, type_msg, sender }) => {
@@ -90,10 +85,11 @@ const handleIssueComment = ({ body, type_msg }) => {
   if (body.action === "created") {
     const name = issue.pull_request ? "pull request" : "issue";
     return (
-      `*${capitalizeFirstLetter(name)} Commented* - ` +
+      `*Comment* - ` +
       type_msg +
       user_name(comment.user) +
-      ` ${body.action} [comment](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url})`
+      ` ${body.action} [comment](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url}):\n\n` +
+      `${comment.body}\n`
     );
   }
 };
@@ -106,7 +102,7 @@ const handleWorkflowRun = ({ body, type_msg }) => {
     return (
       "*Workflow Run Failed* - " + type_msg +
       `[workflow run#${run.run_number}](${run.html_url}) failed!\n\n` +
-      `Commit: ${commit.message}`
+      `head commit: ${commit.message}`
     );
   }
 };
