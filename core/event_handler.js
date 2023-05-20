@@ -100,7 +100,7 @@ const handleWorkflowRun = ({ body, type_msg }) => {
   if (body.action === "completed" && run.conclusion === 'failure') {
     const commit = run.head_commit;
     return (
-      "*Workflow Run Failed* - " + type_msg +
+      `*Workflow ${run.name} Failed* - ` + type_msg +
       `[workflow run#${run.run_number}](${run.html_url}) failed!\n\n` +
       `head commit: ${commit.message}`
     );
