@@ -21,7 +21,7 @@ const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
   commits_str = commits.length > 1 ? "commits" : "commit";
 
   return (
-    "*Push* - " + type_msg +
+    "\u{1F44D} *Push* - " + type_msg +
     user_name(sender) +
     ` pushed [${commits.length} ${commits_str}](${compare}) to [${ref}](${repo_html_url}/tree/${ref})`
   );
@@ -54,7 +54,7 @@ const handleIssues = ({ body, type_msg, sender }) => {
 
   if (body.action === "opened" || body.action === 'closed') {
     return (
-      `*${capitalizeFirstLetter(name)} ${capitalizeFirstLetter(body.action)}* - ` +
+      `\u{1F680} *${capitalizeFirstLetter(name)} ${capitalizeFirstLetter(body.action)}* - ` +
       type_msg +
       user_name(sender) +
       ` ${body.action} [${name}#${issue.number}](${issue.html_url}): ${issue.title}`
@@ -85,7 +85,7 @@ const handleIssueComment = ({ body, type_msg }) => {
   if (body.action === "created") {
     const name = issue.pull_request ? "pull request" : "issue";
     return (
-      `*Comment* - ` +
+      `\u{270F} *Comment* - ` +
       type_msg +
       user_name(comment.user) +
       ` ${body.action} [comment](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url}):\n\n` +
@@ -100,7 +100,7 @@ const handleWorkflowRun = ({ body, type_msg }) => {
   if (body.action === "completed" && run.conclusion === 'failure') {
     const commit = run.head_commit;
     return (
-      `*Workflow ${run.name} Failed* - ` + type_msg +
+      `\u{1F525} *Workflow ${run.name} Failed* - ` + type_msg +
       `[workflow run#${run.run_number}](${run.html_url}) failed on branch ${run.head_branch} \u{1F622}\n\n` +
       `head commit: ${commit.message}`
     );
