@@ -53,8 +53,9 @@ const handleIssues = ({ body, type_msg, sender }) => {
   const name = body.issue ? "issue" : "pull request";
 
   if (body.action === "opened" || body.action === 'closed') {
+    const mark = body.action === "opened" ? "\u{1F680}" : "\u{270C}";
     return (
-      `\u{1F680} *${capitalizeFirstLetter(name)} ${capitalizeFirstLetter(body.action)}* - ` +
+      `${mark} *${capitalizeFirstLetter(name)} ${capitalizeFirstLetter(body.action)}* - ` +
       type_msg +
       user_name(sender) +
       ` ${body.action} [${name}#${issue.number}](${issue.html_url}): ${issue.title}`
@@ -102,7 +103,7 @@ const handleWorkflowRun = ({ body, type_msg }) => {
     return (
       `\u{1F525} *Workflow ${run.name} Failed* - ` + type_msg +
       `[workflow run#${run.run_number}](${run.html_url}) failed on branch ${run.head_branch} \u{1F622}\n\n` +
-      `head commit: ${commit.message}`
+      `${commit.message}`
     );
   }
 };
