@@ -101,7 +101,7 @@ const handleWorkflowRun = ({ body, type_msg }) => {
     const commit = run.head_commit;
     return (
       `*Workflow ${run.name} Failed* - ` + type_msg +
-      `[workflow run#${run.run_number}](${run.html_url}) failed!\n\n` +
+      `[workflow run#${run.run_number}](${run.html_url}) failed on branch ${run.head_branch} \u{1F622}\n\n` +
       `head commit: ${commit.message}`
     );
   }
