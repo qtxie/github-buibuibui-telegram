@@ -18,12 +18,22 @@ const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
   const commits = body.commits;
   const compare = body.compare;
 
-  commits_str = commits.length > 1 ? "commits" : "commit";
+  let commits_message = "";
+  let count = 0;
+  for (let commit of commits) {
+    commits_message = commits_message + `* ${commit.message}\n`;
+    if (++count == 2) {break;}
+  }
+
+  const more_commits = commits.length > 2 ? `\n[more commits »](${compare})` : "";
+
+  const commits_str = commits.length > 1 ? "commits" : "commit";
 
   return (
     "\u{1F44D} *Push* - " + type_msg +
     user_name(sender) +
-    ` pushed [${commits.length} ${commits_str}](${compare}) to [${ref}](${repo_html_url}/tree/${ref})`
+    ` pushed [${commits.length} ${commits_str}](${compare}) to branch [${ref}](${repo_html_url}/tree/${ref})\n\n` +
+    `${commits_message}` + `${more_commits}`
   );
 };
 const handleFork = ({ body, type_msg, sender }) => {
@@ -103,7 +113,7 @@ const handleWorkflowRun = ({ body, type_msg }) => {
     return (
       `\u{1F525} *Workflow ${run.name} Failed* - ` + type_msg +
       `[workflow run#${run.run_number}](${run.html_url}) failed on branch ${run.head_branch} \u{1F622}\n\n` +
-      `${commit.message}`
+      `* ${commit.message}`
     );
   }
 };
