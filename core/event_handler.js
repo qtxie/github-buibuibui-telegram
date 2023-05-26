@@ -32,7 +32,7 @@ const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
   return (
     "\u{1F44D} *Push* - " + type_msg +
     user_name(sender) +
-    ` pushed [${commits.length} ${commits_str}](${compare}) to branch [${ref}](${repo_html_url}/tree/${ref})\n\n` +
+    ` pushed [${commits.length} ${commits_str}](${compare}) to [${ref}](${repo_html_url}/tree/${ref})\n\n` +
     `${commits_message}` + `${more_commits}`
   );
 };
@@ -110,9 +110,10 @@ const handleWorkflowRun = ({ body, type_msg }) => {
 
   if (body.action === "completed" && run.conclusion === 'failure') {
     const commit = run.head_commit;
+    const repo = run.repository;
     return (
       `\u{1F525} *Workflow ${run.name} Failed* - ` + type_msg +
-      `[workflow run#${run.run_number}](${run.html_url}) failed on branch ${run.head_branch} \u{1F622}\n\n` +
+      `[workflow run#${run.run_number}](${run.html_url}) failed on branch [${run.head_branch}](${repo.html_url}/tree/${run.head_branch}) \u{1F622}\n\n` +
       `• ${commit.message}`
     );
   }
