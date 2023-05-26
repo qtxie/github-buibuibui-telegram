@@ -21,7 +21,7 @@ const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
   let commits_message = "";
   let count = 0;
   for (let commit of commits) {
-    commits_message = commits_message + `* ${commit.message}\n`;
+    commits_message = commits_message + `• ${commit.message}\n`;
     if (++count == 2) {break;}
   }
 
@@ -113,7 +113,7 @@ const handleWorkflowRun = ({ body, type_msg }) => {
     return (
       `\u{1F525} *Workflow ${run.name} Failed* - ` + type_msg +
       `[workflow run#${run.run_number}](${run.html_url}) failed on branch ${run.head_branch} \u{1F622}\n\n` +
-      `* ${commit.message}`
+      `• ${commit.message}`
     );
   }
 };
