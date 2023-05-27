@@ -20,12 +20,13 @@ const handlePush = ({ body, action, type_msg, sender, repo_html_url }) => {
 
   let commits_message = "";
   let count = 0;
-  for (let commit of commits) {
+  for (let i = commits.length - 1; i >= 0; i--) {
+    let commit = commits[i];
     commits_message = commits_message + `• ${commit.message}\n`;
-    if (++count == 2) {break;}
+    if (++count == 3) {break;}
   }
 
-  const more_commits = commits.length > 2 ? `\n[more commits »](${compare})` : "";
+  const more_commits = commits.length > 3 ? `\n[more commits »](${compare})` : "";
 
   const commits_str = commits.length > 1 ? "commits" : "commit";
 
