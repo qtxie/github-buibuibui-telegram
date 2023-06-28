@@ -127,8 +127,9 @@ const handleWiki = ({ body, type_msg, sender }) => {
   let messages = "";
   for (let i = pages.length - 1; i >= 0; i--) {
     let page = pages[i];
-    const sha = page.sha.substring(0, 7);
-    const diff = page.html_url + `/_compare/${sha}%5E...${sha}`;
+    //const sha = page.sha.substring(0, 7);
+    //const diff = page.html_url + `/_compare/${sha}%5E...${sha}`;
+    const diff = page.html_url + `/_compare/${page.sha}`;
     const message = user_name(sender) + ` ${page.action} page [${page.title}](${diff})\n`;
     messages = messages + message;
   }
@@ -150,6 +151,21 @@ const handleIssueComment = ({ body, type_msg }) => {
       type_msg +
       user_name(comment.user) +
       ` [commented](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url}):\n\n` +
+      `${comment.body}\n`
+    );
+  }
+};
+
+const handleCommitComment = ({ body, type_msg }) => {
+  const comment = body.comment;
+
+  if (body.action === "created") {
+    const sha = comment.commit_id.substring(0, 7);
+    return (
+      `\u{270F} *Comment* - ` +
+      type_msg +
+      user_name(comment.user) +
+      ` [commented](${comment.html_url}) on [commit#${sha}](${comment.html_url}):\n\n` +
       `${comment.body}\n`
     );
   }
@@ -186,6 +202,7 @@ const strategyMap = {
   pull_request: handleIssues,
   discussion: handleDiscussion,
   discussion_comment: handleDiscussionComment,
+  commit_comment: handleCommitComment,
   gollum: handleWiki,
   workflow_run: handleWorkflowRun,
   project: handleTouch,
