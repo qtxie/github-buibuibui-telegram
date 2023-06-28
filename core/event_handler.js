@@ -90,6 +90,55 @@ const handleIssues = ({ body, type_msg, sender }) => {
   //   );
   // }
 };
+const handleDiscussion = ({ body, type_msg, sender }) => {
+  const discuss = body.discussion;
+  const name = "discussion";
+
+  if (body.action === "created" || body.action === 'closed') {
+    const mark = "\u{1F4AC}";
+    return (
+      `${mark} *${capitalizeFirstLetter(name)} ${capitalizeFirstLetter(body.action)}* - ` +
+      type_msg +
+      user_name(sender) +
+      ` ${body.action} [${name}#${discus.number}](${discuss.html_url}): ${discuss.title}`
+    );
+  }
+}
+
+const handleDiscussionComment = ({ body, type_msg }) => {
+  const comment = body.comment;
+  const discuss = body.discussion;
+
+  if (body.action === "created") {
+    const name = "discussion";
+    return (
+      `\u{1F4AC} *Discussion* - ` +
+      type_msg +
+      user_name(comment.user) +
+      ` [commented](${comment.html_url}) on [${name}#${discuss.number}](${discuss.html_url}):\n\n` +
+      `${comment.body}\n`
+    );
+  }
+};
+
+const handleWiki = ({ body, type_msg, sender }) => {
+  const pages = body.pages;
+
+  let messages = "";
+  for (let i = pages.length - 1; i >= 0; i--) {
+    let page = pages[i];
+    const sha = page.sha.substring(0, 7);
+    const diff = page.html_url + `/_compare/${sha}%5E...${sha}`;
+    const message = user_name(sender) + ` ${page.action} page [${page.title}](${diff})\n`;
+    messages = messages + message;
+  }
+
+  const mark = "\u{1F4D6}";
+  return (
+    `${mark} *Wiki* - ` + type_msg + messages
+  );
+}
+
 const handleIssueComment = ({ body, type_msg }) => {
   const issue = body.issue;
   const comment = body.comment;
@@ -100,7 +149,7 @@ const handleIssueComment = ({ body, type_msg }) => {
       `\u{270F} *Comment* - ` +
       type_msg +
       user_name(comment.user) +
-      ` ${body.action} [comment](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url}):\n\n` +
+      ` [commented](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url}):\n\n` +
       `${comment.body}\n`
     );
   }
@@ -135,6 +184,9 @@ const strategyMap = {
   issues: handleIssues,
   issue_comment: handleIssueComment,
   pull_request: handleIssues,
+  discussion: handleDiscussion,
+  discussion_comment: handleDiscussionComment,
+  gollum: handleWiki,
   workflow_run: handleWorkflowRun,
   project: handleTouch,
 };
