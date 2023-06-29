@@ -121,11 +121,12 @@ const handleDiscussionComment = ({ body, type_msg }) => {
 
   if (body.action === "created") {
     const name = "discussion";
+    const title = clean(discuss.title);
     return (
       `\u{1F4AC} *Discussion* - ` +
       type_msg +
       user_name(comment.user) +
-      ` [commented](${comment.html_url}) on [${name}#${discuss.number}](${discuss.html_url}):\n\n` +
+      ` [commented](${comment.html_url}) on [${name}#${discuss.number}](${discuss.html_url}) (${title}):\n\n` +
       `${comment.body}\n`
     );
   }
@@ -157,11 +158,12 @@ const handleIssueComment = ({ body, type_msg }) => {
 
   if (body.action === "created") {
     const name = issue.pull_request ? "pull request" : "issue";
+    const title = clean(issue.title);
     return (
       `\u{270F} *Comment* - ` +
       type_msg +
       user_name(comment.user) +
-      ` [commented](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url}):\n\n` +
+      ` [commented](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url}) (${title}):\n\n` +
       `${comment.body}\n`
     );
   }
