@@ -73,11 +73,12 @@ const handleIssues = ({ body, type_msg, sender }) => {
 
   if (body.action === "opened" || body.action === 'closed') {
     const mark = body.action === "opened" ? "\u{1F680}" : "\u{270C}";
+    const title = clean(issue.title);
     return (
       `${mark} *${capitalizeFirstLetter(name)} ${capitalizeFirstLetter(body.action)}* - ` +
       type_msg +
       user_name(sender) +
-      ` ${body.action} [${name}#${issue.number}](${issue.html_url}): ${issue.title}`
+      ` ${body.action} [${name}#${issue.number}](${issue.html_url}): ${title}`
     );
   }
 
@@ -104,11 +105,12 @@ const handleDiscussion = ({ body, type_msg, sender }) => {
 
   if (body.action === "created" || body.action === 'closed') {
     const mark = "\u{1F4AC}";
+    const title = clean(discuss.title);
     return (
       `${mark} *${capitalizeFirstLetter(name)} ${capitalizeFirstLetter(body.action)}* - ` +
       type_msg +
       user_name(sender) +
-      ` ${body.action} [${name}#${discus.number}](${discuss.html_url}): ${discuss.title}`
+      ` ${body.action} [${name}#${discus.number}](${discuss.html_url}): ${title}`
     );
   }
 }
@@ -138,7 +140,7 @@ const handleWiki = ({ body, type_msg, sender }) => {
     //const sha = page.sha.substring(0, 7);
     //const diff = page.html_url + `/_compare/${sha}%5E...${sha}`;
     const diff = page.html_url + `/_compare/${page.sha}`;
-    const title = clean(page.title)
+    const title = clean(page.title);
     const message = user_name(sender) + ` ${page.action} page [${title}](${diff})\n`;
     messages = messages + message;
   }
