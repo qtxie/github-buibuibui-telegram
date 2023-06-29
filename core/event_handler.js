@@ -2,6 +2,14 @@ const { cl, capitalizeFirstLetter } = require("../utils/index.js");
 
 const user_name = (sender) => `[${cl(sender.login)}](${sender.html_url})`;
 
+const clean = (text) => {
+  return text
+    .replace("_", "＿")
+    .replace("*", "﹡")
+    .replace("[", "［")
+    .replace("]", "］");
+}
+
 // Support event handles. All Webhook events see:
 // https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
 const handlePing = ({ body, type_msg, sender }) => {
@@ -130,14 +138,14 @@ const handleWiki = ({ body, type_msg, sender }) => {
     //const sha = page.sha.substring(0, 7);
     //const diff = page.html_url + `/_compare/${sha}%5E...${sha}`;
     const diff = page.html_url + `/_compare/${page.sha}`;
-    const title = cl(page.title);
-    const message = user_name(sender) + ` ${page.action} page\n`;
+    const title = clean(page.title)
+    const message = user_name(sender) + ` ${page.action} page [${title}](${diff})\n`;
     messages = messages + message;
   }
 
   const mark = "\u{1F4D6}";
   return (
-    `*Wiki* \- ` + type_msg + messages
+    `${mark} *Wiki* - ` + type_msg + messages
   );
 }
 
