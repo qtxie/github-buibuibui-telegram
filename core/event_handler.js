@@ -131,7 +131,7 @@ const handleWiki = ({ body, type_msg, sender }) => {
     //const diff = page.html_url + `/_compare/${sha}%5E...${sha}`;
     const diff = page.html_url + `/_compare/${page.sha}`;
     const title = cl(page.title);
-    const message = user_name(sender) + ` ${page.action} page [wiki](${diff})\n`;
+    const message = user_name(sender) + ` ${page.action} page [${title}](${diff})\n`;
     messages = messages + message;
   }
 
