@@ -137,7 +137,7 @@ const handleWiki = ({ body, type_msg, sender }) => {
 
   const mark = "\u{1F4D6}";
   return (
-    `${mark} *Wiki* - ` + type_msg + messages
+    `${mark} *Wiki* \- ` + type_msg + messages
   );
 }
 
