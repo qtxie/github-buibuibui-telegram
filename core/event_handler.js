@@ -163,8 +163,7 @@ const handleIssueComment = ({ body, type_msg }) => {
       `\u{270F} *Comment* - ` +
       type_msg +
       user_name(comment.user) +
-      ` [commented](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url}) (${title}):\n\n` +
-      `${comment.body}\n`
+      ` [commented](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url}): ${title}`
     );
   }
 };
