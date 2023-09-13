@@ -122,12 +122,16 @@ const handleDiscussionComment = ({ body, type_msg }) => {
   if (body.action === "created") {
     const name = "discussion";
     const title = clean(discuss.title);
+    let msg = comment.body.substring(0, 200);
+    if (comment.body.length > 200) {
+      msg = msg + "..."
+    }
     return (
       `\u{1F4AC} *Discussion* - ` +
       type_msg +
       user_name(comment.user) +
       ` [commented](${comment.html_url}) on [${name}#${discuss.number}](${discuss.html_url}) (${title}):\n\n` +
-      `${comment.body}\n`
+      `${msg}\n`
     );
   }
 };
@@ -159,11 +163,16 @@ const handleIssueComment = ({ body, type_msg }) => {
   if (body.action === "created") {
     const name = issue.pull_request ? "pull request" : "issue";
     const title = clean(issue.title);
+    let msg = comment.body.substring(0, 200);
+    if (comment.body.length > 200) {
+      msg = msg + "..."
+    }
     return (
       `\u{270F} *Comment* - ` +
       type_msg +
       user_name(comment.user) +
-      ` [commented](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url}): ${title}`
+      ` [commented](${comment.html_url}) on [${name}#${issue.number}](${issue.html_url}): ${title}\n\n` +
+      `${msg}\n`
     );
   }
 };
@@ -173,12 +182,16 @@ const handleCommitComment = ({ body, type_msg }) => {
 
   if (body.action === "created") {
     const sha = comment.commit_id.substring(0, 7);
+    let msg = comment.body.substring(0, 200);
+    if (comment.body.length > 200) {
+      msg = msg + "..."
+    }
     return (
       `\u{270F} *Comment* - ` +
       type_msg +
       user_name(comment.user) +
       ` [commented](${comment.html_url}) on [commit#${sha}](${comment.html_url}):\n\n` +
-      `${comment.body}\n`
+      `${msg}\n`
     );
   }
 };
@@ -206,7 +219,7 @@ const handleTouch = ({ body, type_msg, sender }) => {
 const strategyMap = {
   ping: handlePing,
   //star: handleStar,
-  push: handlePush,
+  //push: handlePush,
   //fork: handleFork,
   repository: handleRepository,
   issues: handleIssues,
