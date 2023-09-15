@@ -71,7 +71,7 @@ const handleIssues = ({ body, type_msg, sender }) => {
   const issue = body.issue ? body.issue : body.pull_request;
   const name = body.issue ? "issue" : "pull request";
 
-  if (body.action === "opened" || body.action === 'closed') {
+  if (body.action === "opened") {
     const mark = body.action === "opened" ? "\u{1F680}" : "\u{270C}";
     const title = clean(issue.title);
     return (
@@ -222,12 +222,12 @@ const strategyMap = {
   //push: handlePush,
   //fork: handleFork,
   repository: handleRepository,
-  issues: handleIssues,
-  issue_comment: handleIssueComment,
+  //issues: handleIssues,
+  //issue_comment: handleIssueComment,
   pull_request: handleIssues,
-  discussion: handleDiscussion,
-  discussion_comment: handleDiscussionComment,
-  commit_comment: handleCommitComment,
+  //discussion: handleDiscussion,
+  //discussion_comment: handleDiscussionComment,
+  //commit_comment: handleCommitComment,
   gollum: handleWiki,
   workflow_run: handleWorkflowRun,
   project: handleTouch,
